@@ -1,5 +1,5 @@
 import React, {Component, forwardRef} from 'react';
-import MaterialTable from 'material-table';
+import MaterialTable, { MTable, MTableToolbar } from 'material-table';
 import Context from '../../components/context';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -20,6 +20,7 @@ import {cpf as cpfLib} from 'cpf-cnpj-validator';
 import api from '../../services/api';
 import {Link} from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
+import './styles.css'
 
 export default class Users extends Component {
 
@@ -76,6 +77,16 @@ export default class Users extends Component {
                         data={
                             this.state.users
                         }
+                        components={{
+                            Toolbar: props => (
+                                <div>
+                                    <MTableToolbar {...props}/>
+                                    <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '10px' }}>
+                                        <Link to="/CreateUser" className="button">Novo Usuário</Link>
+                                    </div>
+                                </div>
+                            )
+                        }}
                         options={{
                             headerStyle: {
                                 fontWeight: 'bold'

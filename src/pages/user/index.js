@@ -71,7 +71,7 @@ export default class Users extends Component {
                             { title: 'Email', field: 'email' },
                             { title: 'Cpf', field: 'cpf' },
                             { title: 'Ação', field: 'id', editable: 'never',
-                             render: rowData => <Link to={`/EditUser/${rowData.id}`}><EditIcon/></Link>
+                             render: rowData => <Link to={`/user/${rowData.id}`}><EditIcon/></Link>
                             }
                         ]}
                         data={
@@ -82,7 +82,7 @@ export default class Users extends Component {
                                 <div>
                                     <MTableToolbar {...props}/>
                                     <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '10px' }}>
-                                        <Link to="/CreateUser" className="button">Novo Usuário</Link>
+                                        <Link to="/user/new" className="button">Novo Usuário</Link>
                                     </div>
                                 </div>
                             )

@@ -1,0 +1,26 @@
+.login-container {
+    height: 100vh;
+}
+
+.login-text {
+    background-color: #f28624;
+    color: #FFF;
+    height: 100%;
+}
+
+.login-title {
+    font-size: 40pt;
+}
+
+.login-welcome {
+    color: #f28624;
+    margin-bottom: 10px;
+    font-size: 22pt;
+}
+
+.login-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

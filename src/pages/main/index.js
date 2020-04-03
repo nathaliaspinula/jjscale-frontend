@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Person from '@material-ui/icons/Person';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import { Link } from 'react-router-dom';
 import './styles.css';
 
@@ -32,10 +33,10 @@ export default class Main extends Component{
               </Link>
             </Grid>
             <Grid item sm={3}>
-              <Link to="/user">
+              <Link to="/product">
                   <Card variant="outlined">
                     <CardContent className="main-card-content">
-                      <Person
+                      <LocalShippingIcon
                         className="main-card-icons" 
                         style={{ fontSize: 40 }}
                       />

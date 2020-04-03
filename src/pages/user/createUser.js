@@ -7,6 +7,7 @@ import Context from '../../components/context';
 import {emailCheck} from '../../components/utils/utils';
 import {cpf} from 'cpf-cnpj-validator';
 import api from '../../services/api';
+import swal from 'sweetalert';
 
 export default class UserForm extends Component{
   state = {
@@ -30,10 +31,10 @@ export default class UserForm extends Component{
 
     if (value.length <= 11) {
       formatted = cpf.format(value);
-      if(!cpf.isValid(value))
-      {
-        invalid = true;
-      }
+    }
+    if(!cpf.isValid(value))
+    {
+      invalid = true;
     }
     await this.setState({cpfValidator: invalid, cpf: formatted});
   }
@@ -53,14 +54,16 @@ export default class UserForm extends Component{
     const name = this.state.name;
     const email = this.state.email;
     const cpfValue = cpf.strip(this.state.cpf);
-    console.log(name + " " + email + " " + cpfValue + " " + this.state.cpfValidator + " " + this.state.emailValidator);
     if (name && email && cpfValue && !this.state.cpfValidator && !this.state.emailValidator) {
           api.post('/user', {
             name: name,
             email: email,
             cpf: cpfValue
           }).then(response => 
-            console.log(response.data)).catch(error => console.log(error));
+            swal("Sucesso!", "Usuário criado.", "success").then(
+              this.props.history.push("/user")
+            )
+        ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
       }
   }
 

@@ -5,6 +5,7 @@ import Main from './pages/main';
 import User from './pages/user';
 import CreateUser from './pages/user/createUser';
 import UserEditForm from './pages/user/editUser';
+import Product from './pages/products';
 
 const Routes = () =>
 (
@@ -14,6 +15,7 @@ const Routes = () =>
         <Route exact path="/user" component={User}></Route>
         <Route exact path="/user/new" component={CreateUser}></Route>
         <Route exact path="/user/:id" component={UserEditForm}></Route>
+        <Route exact path="/product" component={Product}></Route>
     </Switch>
 );
 

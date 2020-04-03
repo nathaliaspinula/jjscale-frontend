@@ -1,5 +1,5 @@
 import React, {Component, forwardRef} from 'react';
-import MaterialTable, { MTable, MTableToolbar } from 'material-table';
+import MaterialTable, { MTableToolbar } from 'material-table';
 import Context from '../../components/context';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -8,6 +8,7 @@ import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import Clear from '@material-ui/icons/Clear';
 import DeleteOutline from '@material-ui/icons/DeleteOutline';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
 import FilterList from '@material-ui/icons/FilterList';
 import FirstPage from '@material-ui/icons/FirstPage';
@@ -20,12 +21,14 @@ import {cpf as cpfLib} from 'cpf-cnpj-validator';
 import api from '../../services/api';
 import {Link} from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
-import './styles.css'
+import swal from 'sweetalert';
+import './styles.css';
 
 export default class Users extends Component {
 
     state = {
-        users: []
+        users: [],
+        isLoading: true
     }
     
     componentDidMount() {
@@ -34,10 +37,14 @@ export default class Users extends Component {
     
     loadUsers = async () =>
     {
-        const response = await api.get('/user');
-        console.log(response.data);
-        const users = response.data.map(item => ({...item, cpf: cpfLib.format(item.cpf) }))
-        this.setState({ users: users });
+        await api.get('/user').then(response => {
+            const users = response.data.map(item => ({...item, cpf: cpfLib.format(item.cpf) }))
+            this.setState({ users: users, isLoading: false });
+        }).catch(error => {
+            swal("Ocorreu um erro!", "Tente novamente.", "error").then(
+                this.setState({ isLoading: false })
+            );
+        });
     }
 
     render() {
@@ -67,11 +74,19 @@ export default class Users extends Component {
                         icons={tableIcons}
                         title="Usuários"
                         columns={[
-                            { title: 'Name', field: 'name' },
+                            { title: 'Nome', field: 'name' },
                             { title: 'Email', field: 'email' },
-                            { title: 'Cpf', field: 'cpf' },
+                            { title: 'CPF', field: 'cpf' },
                             { title: 'Ação', field: 'id', editable: 'never',
-                             render: rowData => <Link to={`/user/${rowData.id}`}><EditIcon/></Link>
+                             render: rowData =>
+                                <React.Fragment>
+                                    <Link to={`/user/${rowData.id}`}>
+                                        <EditIcon color="action" fontSize="small"/>
+                                    </Link>
+                                    <Link to={`/user/${rowData.id}`}>
+                                        <DeleteIcon color="action" fontSize="small"/>
+                                    </Link>
+                                </React.Fragment>
                             }
                         ]}
                         data={
@@ -92,6 +107,7 @@ export default class Users extends Component {
                                 fontWeight: 'bold'
                             }
                         }}
+                        isLoading={this.state.isLoading}
                     />
             </Context>
         );

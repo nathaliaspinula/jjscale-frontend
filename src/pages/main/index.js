@@ -13,7 +13,7 @@ export default class Main extends Component{
   render(){
       return (
         <Context>
-          <Grid container spacing={4} justify="flex-start">
+          <Grid container spacing={4} justify="space-around" className="main-responsive">
             <Grid item sm={3}>
               <Link to="/user">
                 <Card variant="outlined">

@@ -86,7 +86,7 @@ export default class Users extends Component {
                                 <div>
                                     <MTableToolbar {...props}/>
                                     <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '10px' }}>
-                                        <Link to="/user/new" className="button">Novo Produto</Link>
+                                        <Link to="/product/new" className="button">Novo Produto</Link>
                                     </div>
                                 </div>
                             )

@@ -26,6 +26,14 @@ a {
     text-decoration: none;
 }
 
+textarea {
+    width: 100%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+
 .button {
     padding: 10px;
     border-radius: 10px;

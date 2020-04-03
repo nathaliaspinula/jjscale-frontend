@@ -13,12 +13,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AppsIcon from '@material-ui/icons/Apps';
+import { Link } from 'react-router-dom';
 import { mainListItems } from './listItems';
 
 function Copyright() {
@@ -115,6 +115,9 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 'auto',
   },
+  link: {
+    color: '#FFF'
+  }
 }));
 
 export default function Dashboard(props) {
@@ -145,15 +148,19 @@ export default function Dashboard(props) {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Scale
           </Typography>
-          <IconButton color="inherit">
-            <AppsIcon />
-          </IconButton>
+          <Link className={classes.link} to="/home">
+            <IconButton color="inherit">
+              <AppsIcon />
+            </IconButton>
+          </Link>
           <IconButton color="inherit">
             <AccountCircleIcon/>
           </IconButton>
-          <IconButton color="inherit">
-            <ExitToAppIcon />
-          </IconButton>
+          <Link className={classes.link} to="/">
+            <IconButton color="inherit">
+              <ExitToAppIcon />
+            </IconButton>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer

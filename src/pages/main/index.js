@@ -1,28 +1,89 @@
 import React, { Component } from 'react';
 import Context from '../../components/context'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card'
-import Person from '@material-ui/icons/Person'
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Person from '@material-ui/icons/Person';
+import { Link } from 'react-router-dom';
+import './styles.css';
 
 export default class Main extends Component{
   render(){
       return (
         <Context>
-          <Grid container spacing={4} justify="center">
+          <Grid container spacing={4} justify="flex-start">
             <Grid item sm={3}>
-              <Card>
-               <Person style={{ fontSize: 40 }}/>
-              </Card>
+              <Link to="/user">
+                <Card variant="outlined">
+                  <CardContent className="main-card-content">
+                    <Person
+                      className="main-card-icons" 
+                      style={{ fontSize: 40 }}
+                    />
+                    <Typography
+                      color="textPrimary"
+                      className="main-card-title"
+                    >
+                      Usuários
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Link>
             </Grid>
             <Grid item sm={3}>
-              <Card>
-                hellou
-              </Card>
+              <Link to="/user">
+                  <Card variant="outlined">
+                    <CardContent className="main-card-content">
+                      <Person
+                        className="main-card-icons" 
+                        style={{ fontSize: 40 }}
+                      />
+                      <Typography
+                        color="textPrimary"
+                        className="main-card-title"
+                      >
+                        Produtos
+                      </Typography>
+                    </CardContent>
+                  </Card>
+              </Link>
             </Grid>
             <Grid item sm={3}>
-              <Card>
-                hellou
-              </Card>
+              <Link to="/user">
+                <Card variant="outlined">
+                  <CardContent className="main-card-content">
+                    <Person
+                      className="main-card-icons" 
+                      style={{ fontSize: 40 }}
+                    />
+                    <Typography
+                      color="textPrimary"
+                      className="main-card-title"
+                    >
+                      Projetos
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Link>
+            </Grid>
+          <Grid item sm={3}>
+              <Link to="/user">
+                <Card variant="outlined">
+                  <CardContent className="main-card-content">
+                    <Person
+                      className="main-card-icons" 
+                      style={{ fontSize: 40 }}
+                    />
+                    <Typography
+                      color="textPrimary"
+                      className="main-card-title"
+                    >
+                      Propostas
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Link>
             </Grid>
           </Grid>
         </Context>

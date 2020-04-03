@@ -54,6 +54,7 @@ export default class UserForm extends Component{
     const name = this.state.name;
     const email = this.state.email;
     const cpfValue = cpf.strip(this.state.cpf);
+
     if (name && email && cpfValue && !this.state.cpfValidator && !this.state.emailValidator) {
           api.post('/user', {
             name: name,
@@ -64,7 +65,10 @@ export default class UserForm extends Component{
               this.props.history.push("/user")
             )
         ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
-      }
+    }
+    else {
+      swal("Campos inválidos.", "Tente novamente.", "error")
+    }
   }
 
   render() {

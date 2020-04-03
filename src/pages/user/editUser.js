@@ -47,13 +47,13 @@ export default class UserEditForm extends Component{
         const value = event.target.value;
         let formatted = value;
         let invalid = false;
-
+    
         if (value.length <= 11) {
-        formatted = cpf.format(value);
+          formatted = cpf.format(value);
+        }
         if(!cpf.isValid(value))
         {
-            invalid = true;
-        }
+          invalid = true;
         }
         await this.setState({cpfValidator: invalid, cpf: formatted});
     }
@@ -74,7 +74,7 @@ export default class UserEditForm extends Component{
         const email = this.state.email;
         const id = this.state.id;
         const cpfValue = cpf.strip(this.state.cpf);
-        console.log(name + " " + email + " " + cpfValue + " " + this.state.cpfValidator + " " + this.state.emailValidator);
+
         if (name && email && cpfValue && !this.state.cpfValidator && !this.state.emailValidator) {
             api.put('/user', {
                 id: id,
@@ -86,6 +86,9 @@ export default class UserEditForm extends Component{
                     this.props.history.push("/user")
                   )
                 ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
+        }
+        else {
+            swal("Campos inválidos.", "Tente novamente.", "error")
         }
     }
 

@@ -7,6 +7,7 @@ import Context from '../../components/context';
 import {emailCheck} from '../../components/utils/utils';
 import {cpf} from 'cpf-cnpj-validator';
 import api from '../../services/api';
+import swal from 'sweetalert';
 
 export default class UserEditForm extends Component{
     state = {
@@ -81,8 +82,10 @@ export default class UserEditForm extends Component{
                 email: email,
                 cpf: cpfValue
             }).then(response => 
-                    this.props.history.push("/User")
-                ).catch(error => console.log(error));
+                swal("Sucesso!", "Dados atualizados.", "success").then(
+                    this.props.history.push("/user")
+                  )
+                ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
         }
     }
 

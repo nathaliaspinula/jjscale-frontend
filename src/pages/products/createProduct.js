@@ -41,7 +41,9 @@ export default class UserForm extends Component{
               </Typography>
               <Grid container spacing={3}>
                   <Grid item xs={12} sm={12}>
-                    <label>Descrição</label>
+                    <div style={{marginBottom: '10px'}}>
+                      <label>Descrição</label>
+                    </div>
                     <TextareaAutosize
                       rowsMax={4}
                       fullWidth

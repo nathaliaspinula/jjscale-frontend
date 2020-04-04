@@ -7,17 +7,17 @@ import CreateUser from './pages/user/createUser';
 import UserEditForm from './pages/user/editUser';
 import Product from './pages/products';
 import CreateProduct from './pages/products/createProduct';
-
+import PrivateRoute from './components/privateRoute';
 const Routes = () =>
 (
     <Switch>
         <Route exact path="/" component={Login}></Route>
-        <Route exact path="/home" component={Main}></Route>
-        <Route exact path="/user" component={User}></Route>
-        <Route exact path="/user/new" component={CreateUser}></Route>
-        <Route exact path="/user/:id" component={UserEditForm}></Route>
-        <Route exact path="/product" component={Product}></Route>
-        <Route exact path="/product/new" component={CreateProduct}></Route>
+        <PrivateRoute exact path="/home" component={Main} />
+        <PrivateRoute exact path="/user" component={User} />
+        <PrivateRoute exact path="/user/new" component={CreateUser} />
+        <PrivateRoute exact path="/user/:id" component={UserEditForm} />
+        <PrivateRoute exact path="/product" component={Product} />
+        <PrivateRoute exact path="/product/new" component={CreateProduct} />
     </Switch>
 );
 

@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import { FiTrendingUp } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
-
+import { cpf } from 'cpf-cnpj-validator';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import api from '../../services/api';
+import swal from 'sweetalert';
 import './styles.css';
 
 export default function Login() {
@@ -11,23 +13,19 @@ export default function Login() {
     const history = useHistory();
 
     async function handleLogin(e) {
-        // e.preventDefault();
-        // const r = await api.post('session', { id })
-        // .then(response => {
-        //    localStorage.setItem('ongId', id);
-        //    localStorage.setItem('ongName', response.data.name); 
-        //    history.push('/profile');
-        // })
-        // .catch(err => alert('Falha no login, tente novamente.'));
-
-        if (id === "pao")
+        e.preventDefault();
+        if(id)
         {
-            history.push('/home');
+            await api.get(`/user/check/${id}`)
+            .then(response => {
+                localStorage.setItem('cpf', id);
+                history.push('/home');
+            })
+            .catch(err => swal('', 'Falha no login, tente novamente.', 'error'));
         }
-        else {
-            alert("Falha no login, tente novamente.");
-        }
+
     }
+
     return(
         <Grid
             container

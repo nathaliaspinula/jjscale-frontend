@@ -1,5 +1,5 @@
 import React, {Component, forwardRef} from 'react';
-import MaterialTable, { MTable, MTableToolbar } from 'material-table';
+import MaterialTable, { MTableToolbar } from 'material-table';
 import Context from '../../components/context';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';

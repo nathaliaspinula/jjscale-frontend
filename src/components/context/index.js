@@ -120,17 +120,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Dashboard(props) {
+export default function Context(props) {
   const classes = useStyles();
+  
   const [open, setOpen] = React.useState(false);
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+  
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+  
+  const handleLogout = () => {
+    localStorage.clear();
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -153,10 +160,12 @@ export default function Dashboard(props) {
               <AppsIcon />
             </IconButton>
           </Link>
-          <IconButton color="inherit">
-            <AccountCircleIcon/>
-          </IconButton>
-          <Link className={classes.link} to="/">
+          <Link className={classes.link} to="/profile">
+            <IconButton color="inherit">
+              <AccountCircleIcon/>
+            </IconButton>
+          </Link>
+          <Link className={classes.link} onClick={handleLogout} to="/">
             <IconButton color="inherit">
               <ExitToAppIcon />
             </IconButton>

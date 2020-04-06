@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Login from './pages/login';
+import Profile from './pages/profile';
 import Main from './pages/main';
 import User from './pages/user';
 import CreateUser from './pages/user/createUser';
@@ -13,6 +14,7 @@ const Routes = () =>
     <Switch>
         <Route exact path="/" component={Login}></Route>
         <PrivateRoute exact path="/home" component={Main} />
+        <PrivateRoute exact path="/profile" component={Profile} />
         <PrivateRoute exact path="/user" component={User} />
         <PrivateRoute exact path="/user/new" component={CreateUser} />
         <PrivateRoute exact path="/user/:id" component={UserEditForm} />

@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { FiTrendingUp } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
-import { cpf } from 'cpf-cnpj-validator';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import api from '../../services/api';
@@ -18,7 +17,8 @@ export default function Login() {
         {
             await api.get(`/user/check/${id}`)
             .then(response => {
-                localStorage.setItem('cpf', id);
+                console.log(response);
+                localStorage.setItem('user', JSON.stringify(response.data));
                 history.push('/home');
             })
             .catch(err => swal('', 'Falha no login, tente novamente.', 'error'));

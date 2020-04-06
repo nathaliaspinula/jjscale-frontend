@@ -69,7 +69,7 @@ export default class Users extends Component {
         };
         
         return (
-            <Context >
+            <Context>
                     <MaterialTable
                         icons={tableIcons}
                         title="Usuários"

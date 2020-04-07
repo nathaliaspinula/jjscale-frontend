@@ -61,3 +61,7 @@ label.Mui-focused {
 {
     border-color: #f28624 !important;
 }
+
+.MuiCircularProgress-colorPrimary {
+    color: #f28624 !important;
+}

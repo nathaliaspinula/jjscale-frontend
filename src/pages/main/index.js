@@ -51,7 +51,7 @@ export default class Main extends Component{
               </Link>
             </Grid>
             <Grid item sm={3}>
-              <Link to="/user">
+              <Link to="/project">
                 <Card variant="outlined">
                   <CardContent className="main-card-content">
                     <Person

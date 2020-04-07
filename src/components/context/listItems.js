@@ -2,11 +2,9 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
+import Person from '@material-ui/icons/Person';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import { Link } from 'react-router-dom';
 import './styles/listItem.css';
 
@@ -14,37 +12,29 @@ import './styles/listItem.css';
 
 export const mainListItems = (
   <div>
-    <Link to='/User' className='link'>
+    <Link to='/user' className='link'>
       <ListItem button>
         <ListItemIcon>
-          <DashboardIcon />
+          <Person />
         </ListItemIcon>
         <ListItemText primary="Usuários" />
       </ListItem>
     </Link>
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
-    </ListItem>
+    <Link to='/product' className='link'>
+      <ListItem button>
+        <ListItemIcon>
+          <LocalShippingIcon />
+        </ListItemIcon>
+        <ListItemText primary="Produtos" />
+      </ListItem>
+    </Link>
+    <Link to='/project' className='link'>
+      <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Projetos" />
+      </ListItem>
+    </Link>
   </div>
 );

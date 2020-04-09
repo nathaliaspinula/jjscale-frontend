@@ -17,7 +17,6 @@ export default function Login() {
         {
             await api.get(`/user/check/${id}`)
             .then(response => {
-                console.log(response);
                 localStorage.setItem('user', JSON.stringify(response.data));
                 history.push('/home');
             })

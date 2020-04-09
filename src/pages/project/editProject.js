@@ -16,50 +16,55 @@ export default class EditProject extends Component{
     id: '',
     nome: '',
     apelido: '',
-    cliente: [],
+    idcliente: '',
+    cliente: {},
     clientes: []
   }
 
   componentDidMount() {
     this.loadProject();
-    this.loadClients();
   }
 
   loadProject = async () =>
   {
       const {id} = this.props.match.params;
-      const response  = await api.get(`/projeto/${id}`);
-      this.setState({
-          id: response.data[0].idprojeto,
-          nome: response.data[0].nome,
-          apelido: response.data[0].apelido
+       await api.get(`/projeto/${id}`).then(response => {
+        const project = response.data[0];
+        this.setState({
+          id: project.idprojeto,
+          nome: project.nome,
+          apelido: project.apelido,
+          idcliente: project.idcliente
        });
+       this.loadClients();
+      }).catch(error => {
+          swal("Ocorreu um erro!", "Tente novamente.", "error").then(
+              this.setState({ isLoading: false })
+          );
+      });
   }
 
   loadClients = async (e) => {
-    const names = [
-        'Oliver Hansen',
-        'Van Henry',
-        'April Tucker',
-        'Ralph Hubbard',
-        'Omar Alexander',
-        'Carlos Abbott',
-        'Miriam Wagner',
-        'Bradley Wilkerson',
-        'Virginia Andrews',
-        'Kelly Snyder',
-      ];
-
-      this.setState({ clientes: names });
+    await api.get('/cliente').then(response => {
+      const clientes = response.data;
+      const clienteSelecionado = response.data.find(item => item.idcliente === this.state.idcliente);
+      this.setState({ clientes: clientes, cliente: clienteSelecionado.idcliente, isLoading: false });
+    }).catch(error => {
+        swal("Ocorreu um erro!", "Tente novamente.", "error").then(
+            this.setState({ isLoading: false })
+        );
+    });
   }
 
   saveProject = async (e) => {
-    api.post('/project', {
-      descricao: this.state.descricao,
-      requisito: this.state.requisito,
-    }).then(response => 
-      swal("Sucesso!", "Produto criado.", "success").then(
-        this.props.history.push("/product")
+    api.put('/projeto', {
+      idprojeto: this.state.id,
+      nome: this.state.nome,
+      apelido: this.state.apelido,
+      idcliente: this.state.cliente
+    }).then(response =>
+      swal("Sucesso!", "Projeto alterado.", "success").then(
+        this.props.history.push("/project")
       )
     ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
   }
@@ -116,11 +121,11 @@ export default class EditProject extends Component{
                     input={<Input />}
                     fullWidth
                     >
-                    {this.state.clientes.map((name) => (
-                        <MenuItem key={name} value={name}>
-                        {name}
+                    {this.state.clientes.map(item => 
+                        <MenuItem key={Math.random()} value={item.idcliente}>
+                        {item.razaosocial}
                         </MenuItem>
-                    ))}
+                    )}
                     </Select>
                   </Grid>
                   <Grid item justify="flex-end" container xs={12}>

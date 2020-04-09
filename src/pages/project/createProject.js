@@ -24,29 +24,22 @@ export default class UserForm extends Component{
   }
 
   loadClients = async (e) => {
-    const names = [
-        'Oliver Hansen',
-        'Van Henry',
-        'April Tucker',
-        'Ralph Hubbard',
-        'Omar Alexander',
-        'Carlos Abbott',
-        'Miriam Wagner',
-        'Bradley Wilkerson',
-        'Virginia Andrews',
-        'Kelly Snyder',
-      ];
-
-      this.setState({ clientes: names });
+    await api.get('/cliente').then(response => {
+      const clientes = response.data;
+      this.setState({ clientes: clientes, isLoading: false });
+    }).catch(error => {
+        swal("Ocorreu um erro!", "Tente novamente.", "error")
+    });
   }
 
   saveProject = async (e) => {
-    api.post('/project', {
-      descricao: this.state.descricao,
-      requisito: this.state.requisito,
+    api.post('/projeto', {
+      nome: this.state.nome,
+      apelido: this.state.apelido,
+      idcliente: this.state.cliente
     }).then(response => 
-      swal("Sucesso!", "Produto criado.", "success").then(
-        this.props.history.push("/product")
+      swal("Sucesso!", "Projeto criado.", "success").then(
+        this.props.history.push("/project")
       )
     ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
   }
@@ -101,11 +94,11 @@ export default class UserForm extends Component{
                     input={<Input />}
                     fullWidth
                     >
-                    {this.state.clientes.map((name) => (
-                        <MenuItem key={name} value={name}>
-                        {name}
+                    {this.state.clientes.map(item => 
+                        <MenuItem key={Math.random()} value={item.idcliente}>
+                        {item.razaosocial}
                         </MenuItem>
-                    ))}
+                    )}
                     </Select>
                   </Grid>
                   <Grid item justify="flex-end" container xs={12}>

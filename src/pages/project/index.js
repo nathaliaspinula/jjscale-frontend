@@ -36,7 +36,6 @@ export default class Project extends Component {
     loadProjects = async () =>
     {
         await api.get('/projeto').then(response => {
-            console.log(response)
             const projects = response.data;
             this.setState({ projects: projects, isLoading: false });
         }).catch(error => {
@@ -75,6 +74,7 @@ export default class Project extends Component {
                         columns={[
                             { title: 'Nome', field: 'nome' },
                             { title: 'Apelido', field: 'apelido' },
+                            { title: 'Cliente', field: 'razaosocial' },
                             { title: 'Ação', field: 'id', editable: 'never',
                              render: rowData => 
                             <React.Fragment>

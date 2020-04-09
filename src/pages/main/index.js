@@ -15,6 +15,24 @@ export default class Main extends Component{
         <Context>
           <Grid container spacing={4} justify="space-around" className="main-responsive">
             <Grid item sm={3}>
+              <Link to="/client">
+                <Card variant="outlined">
+                  <CardContent className="main-card-content">
+                    <Person
+                      className="main-card-icons" 
+                      style={{ fontSize: 40 }}
+                    />
+                    <Typography
+                      color="textPrimary"
+                      className="main-card-title"
+                    >
+                      Clientes
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Link>
+            </Grid>
+            <Grid item sm={3}>
               <Link to="/user">
                 <Card variant="outlined">
                   <CardContent className="main-card-content">

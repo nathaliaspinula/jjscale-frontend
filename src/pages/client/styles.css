@@ -1,0 +1,11 @@
+.button {
+    padding: 10px;
+    border-radius: 10px;
+    background: #f28624;
+    color: white;
+    text-decoration: none;
+}
+
+.not-visible {
+    display: none;
+}

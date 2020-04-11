@@ -36,7 +36,7 @@ export default class UserForm extends Component{
         const result = response.data[0];
         this.setState({
             idCliente: result.idcliente,
-            cnpj: result.cpf_cnpj,
+            cnpj: cnpj.format(result.cpf_cnpj),
             razaoSocial: result.razaosocial,
             rua: result.rua,
             numero: result.numero,
@@ -98,7 +98,7 @@ export default class UserForm extends Component{
         if(!response.data.error) {
           const result = response.data;
           this.setState({
-            rua: result.logradouro,
+            rua: result.rua,
             complemento: result.complemento,
             bairro: result.bairro,
             cidade: result.localidade,
@@ -153,7 +153,7 @@ export default class UserForm extends Component{
             idcliente: this.state.idCliente,
             cpf_cnpj: cnpjValue,
             razaosocial: this.state.razaoSocial,
-            rua: this.state.logradouro,
+            rua: this.state.rua,
             numero: this.state.numero,
             cep: this.state.cep,
             complemento: this.state.complemento,
@@ -175,7 +175,7 @@ export default class UserForm extends Component{
     return (
         <Context container="true">
               <Typography variant="h6" gutterBottom>
-                  Novo Cliente
+                  Editar Cliente
               </Typography>
               <Grid container spacing={3}>
                   <Grid item sm={6} xs={12}>

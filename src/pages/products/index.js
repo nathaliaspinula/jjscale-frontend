@@ -35,7 +35,7 @@ export default class Users extends Component {
     
     loadProducts = async () =>
     {
-        await api.get('/product').then(response => {
+        await api.get('/produto').then(response => {
             const products = response.data.map(item => ({...item, cpf: cpfLib.format(item.cpf) }))
             this.setState({ products: products, isLoading: false });
         }).catch(error => {

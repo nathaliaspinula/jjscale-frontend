@@ -15,7 +15,7 @@ export default class UserForm extends Component{
   }
 
   saveProduct = async (e) => {
-    api.post('/product', {
+    api.post('/produto', {
       descricao: this.state.descricao,
       requisito: this.state.requisito,
     }).then(response => 
@@ -46,7 +46,7 @@ export default class UserForm extends Component{
                     </div>
                     <TextareaAutosize
                       rowsMax={4}
-                      fullWidth
+                      onChange={this.handleDescricaoChange}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -56,7 +56,7 @@ export default class UserForm extends Component{
                         name="requisito"
                         label="Requisitos"
                         fullWidth
-                        onChange={e => this.handleRequisitoChange}
+                        onChange={this.handleRequisitoChange}
                       />
                   </Grid>
                   <Grid item justify="flex-end" container xs={12}>

@@ -1,10 +1,15 @@
 .login-container {
     height: 100vh;
+    background-color: #efefef;
 }
 
 .login-text {
-    background-color: #f28624;
-    color: #FFF;
+    /* background-color: #ffda00; */
+    background-image: url('../../assets/background.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.8;
+    color: #000;
     height: 100%;
 }
 
@@ -13,7 +18,7 @@
 }
 
 .login-welcome {
-    color: #f28624;
+    color:#303030;  
     margin-bottom: 10px;
     font-size: 22pt;
 }

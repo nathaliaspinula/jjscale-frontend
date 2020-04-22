@@ -6,11 +6,13 @@
 }
 
 .main-card-icons {
-    color: #f28624;
+    color: #ffda00;
 }
 
 .main-card-title { 
     margin-top: 10px !important;
+    color: rgb(0, 0, 0);
+    /* font-weight: bold; */
 }
 
 @media only screen and (max-width: 600px) {

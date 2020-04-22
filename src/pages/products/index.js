@@ -36,8 +36,8 @@ export default class Users extends Component {
     loadProducts = async () =>
     {
         await api.get('/produto').then(response => {
-            const products = response.data.map(item => ({...item, cpf: cpfLib.format(item.cpf) }))
-            this.setState({ products: products, isLoading: false });
+            const products = response.data;
+            this.setState({ products, isLoading: false });
         }).catch(error => {
             swal("Ocorreu um erro!", "Tente novamente.", "error").then(
                 this.setState({ isLoading: false })
@@ -75,7 +75,10 @@ export default class Users extends Component {
                             { title: 'Descrição', field: 'descricao' },
                             { title: 'Requisito', field: 'requisito' },
                             { title: 'Ação', field: 'id', editable: 'never',
-                             render: rowData => <Link to={`/user/${rowData.id}`}><EditIcon/></Link>
+                             render: rowData => 
+                                <Link to={`/product/${rowData.idproduto}`}>
+                                    <EditIcon color="action" fontSize="small"/>
+                                </Link>
                             }
                         ]}
                         data={

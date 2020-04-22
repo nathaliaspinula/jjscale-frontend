@@ -23,7 +23,6 @@ export default class Main extends Component{
                       style={{ fontSize: 40 }}
                     />
                     <Typography
-                      color="textPrimary"
                       className="main-card-title"
                     >
                       Clientes
@@ -41,7 +40,6 @@ export default class Main extends Component{
                       style={{ fontSize: 40 }}
                     />
                     <Typography
-                      color="textPrimary"
                       className="main-card-title"
                     >
                       Usuários
@@ -59,7 +57,6 @@ export default class Main extends Component{
                         style={{ fontSize: 40 }}
                       />
                       <Typography
-                        color="textPrimary"
                         className="main-card-title"
                       >
                         Produtos
@@ -77,7 +74,6 @@ export default class Main extends Component{
                       style={{ fontSize: 40 }}
                     />
                     <Typography
-                      color="textPrimary"
                       className="main-card-title"
                     >
                       Projetos
@@ -95,7 +91,6 @@ export default class Main extends Component{
                       style={{ fontSize: 40 }}
                     />
                     <Typography
-                      color="textPrimary"
                       className="main-card-title"
                     >
                       Propostas

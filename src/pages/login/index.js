@@ -32,12 +32,13 @@ export default function Login() {
             className="login-container"
         >
             <Grid 
-                container 
+                container
                 direction="column"
                 alignItems="center" 
                 justify="center"
                 className="login-text"
-                xs={6}
+                xs={5}
+                sm={6}
             >
                 <FiTrendingUp size={50}/>
                 <h1 className="login-title">Scale</h1>
@@ -45,7 +46,8 @@ export default function Login() {
             <Grid
                 container
                 justify="center"
-                xs={6}
+                xs={7}
+                sm={6}
             >
                
                 <form onSubmit={handleLogin} className="login-form">

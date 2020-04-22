@@ -37,7 +37,7 @@ textarea {
 .button {
     padding: 10px;
     border-radius: 10px;
-    background: #f28624;
+    background: #ffda00;
     color: white;
     text-decoration: none;
     border: none;
@@ -50,7 +50,7 @@ textarea {
 
 .MuiFormLabel,
 label.Mui-focused {
-    color: #f28624 !important;
+    color: #ffda00 !important;
 }
 
 .MuiOutlinedInput-root fieldset,
@@ -59,9 +59,9 @@ label.Mui-focused {
 .MuiOutlinedInput-notchedOutline fieldset,
 .MuiInput-underline:after
 {
-    border-color: #f28624 !important;
+    border-color: #ffda00 !important;
 }
 
 .MuiCircularProgress-colorPrimary {
-    color: #f28624 !important;
+    color: #ffda00 !important;
 }

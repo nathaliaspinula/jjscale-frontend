@@ -20,6 +20,10 @@ import Product from './pages/products';
 import CreateProduct from './pages/products/createProduct';
 import EditProduct from './pages/products/editProduct';
 
+import Model from './pages/model';
+import CreateModel from './pages/model/createModel';
+// import EditModel from './pages/products/editModel';
+
 import Project from './pages/project';
 import CreateProject from './pages/project/createProject';
 import EditProject from './pages/project/editProject';
@@ -41,6 +45,9 @@ const Routes = () =>
         <PrivateRoute exact path="/product" component={Product} />
         <PrivateRoute exact path="/product/new" component={CreateProduct} />
         <PrivateRoute exact path="/product/:id" component={EditProduct} />
+        <PrivateRoute exact path="/model" component={Model} />
+        <PrivateRoute exact path="/model/new" component={CreateModel} />
+        <PrivateRoute exact path="/model/:id" component={EditProduct} />
         <PrivateRoute exact path="/project" component={Project} />
         <PrivateRoute exact path="/project/new" component={CreateProject} />
         <PrivateRoute exact path="/project/:id" component={EditProject} />

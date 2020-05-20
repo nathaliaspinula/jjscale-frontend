@@ -5,6 +5,9 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Person from '@material-ui/icons/Person';
+import Group from '@material-ui/icons/Group';
+import Description from '@material-ui/icons/Description';
+import Folder from '@material-ui/icons/Folder';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import { Link } from 'react-router-dom';
 import './styles.css';
@@ -14,11 +17,11 @@ export default class Main extends Component{
       return (
         <Context>
           <Grid container spacing={4} justify="space-around" className="main-responsive">
-            <Grid item sm={3}>
+              <Grid item sm={3}>
               <Link to="/client">
                 <Card variant="outlined">
                   <CardContent className="main-card-content">
-                    <Person
+                    <Group
                       className="main-card-icons" 
                       style={{ fontSize: 40 }}
                     />
@@ -69,7 +72,7 @@ export default class Main extends Component{
               <Link to="/project">
                 <Card variant="outlined">
                   <CardContent className="main-card-content">
-                    <Person
+                    <Folder
                       className="main-card-icons" 
                       style={{ fontSize: 40 }}
                     />
@@ -82,11 +85,28 @@ export default class Main extends Component{
                 </Card>
               </Link>
             </Grid>
-          <Grid item sm={3}>
+            <Grid item sm={3}>
+              <Link to="/model">
+                <Card variant="outlined">
+                  <CardContent className="main-card-content">
+                    <Description
+                      className="main-card-icons" 
+                      style={{ fontSize: 40 }}
+                    />
+                    <Typography
+                      className="main-card-title"
+                    >
+                      Modelos
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Link>
+            </Grid>
+            <Grid item sm={3}>
               <Link to="/user">
                 <Card variant="outlined">
                   <CardContent className="main-card-content">
-                    <Person
+                    <Description
                       className="main-card-icons" 
                       style={{ fontSize: 40 }}
                     />

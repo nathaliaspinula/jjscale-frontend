@@ -2,8 +2,10 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import PeopleIcon from '@material-ui/icons/People';
+import Folder from '@material-ui/icons/Folder';
 import Person from '@material-ui/icons/Person';
+import Group from '@material-ui/icons/Group';
+import Description from '@material-ui/icons/Description';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import { Link } from 'react-router-dom';
 import './styles/listItem.css';
@@ -12,6 +14,14 @@ import './styles/listItem.css';
 
 export const mainListItems = (
   <div>
+    <Link to='/client' className='link'>
+      <ListItem button>
+        <ListItemIcon>
+          <Group />
+        </ListItemIcon>
+        <ListItemText primary="Clientes" />
+      </ListItem>
+    </Link>
     <Link to='/user' className='link'>
       <ListItem button>
         <ListItemIcon>
@@ -31,9 +41,25 @@ export const mainListItems = (
     <Link to='/project' className='link'>
       <ListItem button>
         <ListItemIcon>
-          <PeopleIcon />
+          <Folder />
         </ListItemIcon>
         <ListItemText primary="Projetos" />
+      </ListItem>
+    </Link>
+    <Link to='/model' className='link'>
+      <ListItem button>
+        <ListItemIcon>
+          <Description />
+        </ListItemIcon>
+        <ListItemText primary="Modelos" />
+      </ListItem>
+    </Link>
+    <Link to='/proposal' className='link'>
+      <ListItem button>
+        <ListItemIcon>
+          <Description />
+        </ListItemIcon>
+        <ListItemText primary="Proposta" />
       </ListItem>
     </Link>
   </div>

@@ -3,33 +3,27 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Context from '../../components/context';
-import {cpf} from 'cpf-cnpj-validator';
 import api from '../../services/api';
 import swal from 'sweetalert';
 import Editor from '../../components/editor';
-import { stateToHTML } from 'draft-js-export-html';
 
 export default class ModelForm extends Component{
     constructor(props) {
         super(props);
-        this.state=props;
+        this.state={
+          ola: null,
+        };
     }
 
-    saveUser = async (e) => {
-      console.log(this.state)
-    //let html = stateToHTML(this.state);
-    const name = this.state.name;
-    const email = this.state.email;
-    const cpfValue = cpf.strip(this.state.cpf);
+    saveUser = async () => {
+      const { ola } = this.state;
 
-    if (name && email && cpfValue && !this.state.cpfValidator && !this.state.emailValidator) {
-          api.post('/user', {
-            name: name,
-            email: email,
-            cpf: cpfValue
-          }).then(response => 
-            swal("Sucesso!", "Usuário criado.", "success").then(
-              this.props.history.push("/user")
+      console.log(this.state)
+
+    if (ola) {
+          api.post('/modelo', { payload: ola }).then(response => 
+            swal("Sucesso!", "Modelo criado.", "success").then(
+              this.props.history.push("/model")
             )
         ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
     }
@@ -45,7 +39,9 @@ export default class ModelForm extends Component{
                   Novo Modelo
               </Typography>
               <Grid container spacing={3}>
-                  <Editor/>
+                  <Editor callback={(evt) => this.setState({
+                    ola: evt,
+                  })} />
                   <Grid item justify="flex-end" container xs={12}>
                     <Button size="small" variant="contained" onClick={this.saveUser}>Salvar</Button>
                   </Grid>

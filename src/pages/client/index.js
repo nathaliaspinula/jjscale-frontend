@@ -24,7 +24,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import swal from 'sweetalert';
 import './styles.css';
 
-export default class Users extends Component {
+export default class Client extends Component {
 
     state = {
         clientes: [],

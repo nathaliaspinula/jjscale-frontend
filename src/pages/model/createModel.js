@@ -11,15 +11,15 @@ export default class ModelForm extends Component{
     constructor(props) {
         super(props);
         this.state={
-          ola: null,
+          modelo: null,
         };
     }
 
     saveUser = async () => {
-      const { ola } = this.state;
+      const { modelo } = this.state;
 
-      if (ola) {
-            api.post('/modelo', { payload: ola }).then(response => 
+      if (modelo) {
+            api.post('/modelo', { modelo }).then(response => 
               swal("Sucesso!", "Modelo criado.", "success").then(
                 this.props.history.push("/model")
               )

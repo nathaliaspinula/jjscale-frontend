@@ -11,9 +11,9 @@ import axios from 'axios';
 
 export default class UserForm extends Component{
   state = {
-    idCliente: '',
+    idcliente: '',
     cnpj: '',
-    razaoSocial: '',
+    razaosocial: '',
     rua: '',
     numero: '',
     complemento: '',
@@ -33,19 +33,31 @@ export default class UserForm extends Component{
   {
     const {id} = this.props.match.params;
     api.get(`/cliente/${id}`).then(response => {
-        const result = response.data[0];
+        const {
+          cpf_cnpj,
+          idcliente,
+          razaosocial, 
+          rua,
+          numero,
+          complemento,
+          cep,
+          bairro,
+          uf,
+          cidade,
+          pais,
+        } = response.data.find(cliente => cliente.idcliente.toString() === id);
         this.setState({
-            idCliente: result.idcliente,
-            cnpj: cnpj.format(result.cpf_cnpj),
-            razaoSocial: result.razaosocial,
-            rua: result.rua,
-            numero: result.numero,
-            complemento: result.complemento,
-            cep: result.cep,
-            bairro: result.bairro,
-            uf: result.uf,
-            cidade: result.cidade,
-            pais: result.pais,
+            idcliente,
+            cnpj: cnpj.format(cpf_cnpj),
+            razaosocial,
+            rua,
+            numero: numero ? numero : '',
+            complemento,
+            cep,
+            bairro,
+            uf,
+            cidade,
+            pais,
         })
     }).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
 
@@ -67,9 +79,9 @@ export default class UserForm extends Component{
     await this.setState({cnpjValidator: invalid, cnpj: formatted});
   }
 
-  handleRazaoSocialChange = async (event) =>
+  handlerazaosocialChange = async (event) =>
   {
-    await this.setState({ razaoSocial: event.target.value });
+    await this.setState({ razaosocial: event.target.value });
   }
 
   handleRuaChange = async (event) =>
@@ -96,13 +108,14 @@ export default class UserForm extends Component{
     {
       await axios.get(`https://viacep.com.br/ws/${cepDigitado}/json/`).then(response => {
         if(!response.data.error) {
-          const result = response.data;
+          const {logradouro, complemento, bairro, localidade, uf} = response.data;
+          console.log()
           this.setState({
-            rua: result.rua,
-            complemento: result.complemento,
-            bairro: result.bairro,
-            cidade: result.localidade,
-            uf: result.uf        
+            rua: logradouro ? logradouro : '',
+            complemento: complemento ? complemento : '',
+            bairro: bairro ? bairro : '',
+            cidade: localidade ? localidade : '',
+            uf: uf ? uf : ''
           })
         } else {
           this.setState({
@@ -147,27 +160,51 @@ export default class UserForm extends Component{
 
   saveCliente = async (e) => {
     const cnpjValue = cnpj.strip(this.state.cnpj);
+    const { 
+      idcliente,
+      razaosocial,
+      rua,
+      numero,
+      cep,
+      complemento,
+      bairro,
+      cidade,
+      uf,
+      pais
+    } = this.state;
 
-    if (cnpjValue && !this.state.cnpjValidator) {
+    if (cnpjValue &&
+      !this.state.cnpjValidator &&
+      idcliente &&
+      razaosocial &&
+      rua &&
+      numero &&
+      cep &&
+      complemento &&
+      bairro &&
+      cidade &&
+      uf &&
+      pais) {
           api.put('/cliente', {
-            idcliente: this.state.idCliente,
+            idcliente,
             cpf_cnpj: cnpjValue,
-            razaosocial: this.state.razaoSocial,
-            rua: this.state.rua,
-            numero: this.state.numero,
-            cep: this.state.cep,
-            complemento: this.state.complemento,
-            bairro: this.state.bairro,
-            cidade: this.state.cidade,
-            uf: this.state.uf
+            razaosocial,
+            rua,
+            numero,
+            cep,
+            complemento,
+            bairro,
+            cidade,
+            uf,
+            pais
           }).then(response => 
-            swal("Sucesso!", "Cliente criado.", "success").then(
+            swal("Sucesso!", "Cliente atualizado.", "success").then(
               this.props.history.push("/client")
             )
-        ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
+        ).catch(error => {swal("Ocorreu um erro!", "Tente novamente.", "error"); console.log(error)});
     }
     else {
-      swal("Campos inválidos.", "Tente novamente.", "error")
+      swal("Campos inválidos.", "Verifique se todos os campos obrigatórios estão preenchidos.", "error")
     }
   }
 
@@ -182,11 +219,11 @@ export default class UserForm extends Component{
                       <TextField
                           required
                           fullWidth
-                          id="razaoSocial"
-                          name="razaoSocial"
+                          id="razaosocial"
+                          name="razaosocial"
                           label="Razão Social"
-                          value={this.state.razaoSocial}
-                          onChange={this.handleRazaoSocialChange}
+                          value={this.state.razaosocial}
+                          onChange={this.handlerazaosocialChange}
                         />
                   </Grid>
                   <Grid item sm={6} xs={12}>

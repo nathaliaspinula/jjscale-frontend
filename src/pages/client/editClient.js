@@ -50,14 +50,14 @@ export default class UserForm extends Component{
             idcliente,
             cnpj: cnpj.format(cpf_cnpj),
             razaosocial,
-            rua,
+            rua: rua ? rua : '',
             numero: numero ? numero : '',
             complemento,
             cep,
             bairro,
             uf,
             cidade,
-            pais,
+            pais: pais ? pais : '',
         })
     }).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
 
@@ -77,26 +77,6 @@ export default class UserForm extends Component{
       invalid = true;
     }
     await this.setState({cnpjValidator: invalid, cnpj: formatted});
-  }
-
-  handlerazaosocialChange = async (event) =>
-  {
-    await this.setState({ razaosocial: event.target.value });
-  }
-
-  handleRuaChange = async (event) =>
-  {
-    await this.setState({ rua: event.target.value });
-  }
-
-  handleNumeroChange = async (event) =>
-  {
-    await this.setState({ numero: event.target.value });
-  }
-
-  handleComplementoChange = async (event) =>
-  {
-    await this.setState({ complemento: event.target.value });
   }
 
   handleCepChange = async (event) =>
@@ -136,26 +116,6 @@ export default class UserForm extends Component{
         })
       })
     }
-  }
-
-  handleBairroChange = async (event) =>
-  {
-    await this.setState({ bairro: event.target.value });
-  }
-  
-  handleUfChange = async (event) =>
-  {
-    await this.setState({ uf: event.target.value });
-  }
-
-  handleCidadeChange = async (event) =>
-  {
-    await this.setState({ cidade: event.target.value });
-  }
-
-  handlePaisChange = async (event) =>
-  {
-    await this.setState({ pais: event.target.value });
   }
 
   saveCliente = async (e) => {
@@ -201,18 +161,18 @@ export default class UserForm extends Component{
             swal("Sucesso!", "Cliente atualizado.", "success").then(
               this.props.history.push("/client")
             )
-        ).catch(error => {swal("Ocorreu um erro!", "Tente novamente.", "error"); console.log(error)});
+        ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
     }
     else {
-      swal("Campos inválidos.", "Verifique se todos os campos obrigatórios estão preenchidos.", "error")
+      swal("Campos inválidos.", "Verifique se todos os campos obrigatórios estão preenchidos.", "error");
     }
   }
 
   render() {
     return (
-        <Context container="true">
+<Context container="true">
               <Typography variant="h6" gutterBottom>
-                  Editar Cliente
+                  Novo Cliente
               </Typography>
               <Grid container spacing={3}>
                   <Grid item sm={6} xs={12}>
@@ -223,7 +183,7 @@ export default class UserForm extends Component{
                           name="razaosocial"
                           label="Razão Social"
                           value={this.state.razaosocial}
-                          onChange={this.handlerazaosocialChange}
+                          onChange={(e) => this.setState({razaosocial: e.target.value})}
                         />
                   </Grid>
                   <Grid item sm={6} xs={12}>
@@ -265,7 +225,7 @@ export default class UserForm extends Component{
                           label="Numero"
                           type="number"
                           value={this.state.numero}
-                          onChange={this.handleNumeroChange}
+                          onChange={(e) => this.setState({numero: e.target.value})}
                         />
                   </Grid>
                   <Grid item xs={12} sm={3}>
@@ -275,7 +235,7 @@ export default class UserForm extends Component{
                           name="complemento"
                           label="Complemento"
                           value={this.state.complemento}
-                          onChange={this.handleComplementoChange}
+                          onChange={(e) => this.setState({complemento: e.target.value})}
                         />
                   </Grid>
                   <Grid item sm={5} xs={12} >
@@ -286,7 +246,7 @@ export default class UserForm extends Component{
                           name="rua"
                           label="Rua"
                           value={this.state.rua}
-                          onChange={this.handleRuaChange}
+                          onChange={(e) => this.setState({rua: e.target.value})}
                         />
                   </Grid>
                   <Grid item sm={3} xs={12} >
@@ -297,7 +257,7 @@ export default class UserForm extends Component{
                           name="bairro"
                           label="Bairro"
                           value={this.state.bairro}
-                          onChange={this.handleBairroChange}
+                          onChange={(e) => this.setState({bairro: e.target.value})}
                         />
                   </Grid>
                   <Grid item sm={3} xs={12}>
@@ -308,7 +268,7 @@ export default class UserForm extends Component{
                           name="cidade"
                           label="Cidade"
                           value={this.state.cidade}
-                          onChange={this.handleCidadeChange}
+                          onChange={(e) => this.setState({cidade: e.target.value})}
                         />
                   </Grid>
                   <Grid item sm={3} xs={12}>
@@ -319,7 +279,7 @@ export default class UserForm extends Component{
                           name="uf"
                           label="UF"
                           value={this.state.uf}
-                          onChange={this.handleUfChange}
+                          onChange={(e) => this.setState({uf: e.target.value})}
                         />
                   </Grid>
                   <Grid item sm={3} xs={12}>
@@ -330,7 +290,7 @@ export default class UserForm extends Component{
                           name="pais"
                           label="Pais"
                           value={this.state.pais}
-                          onChange={this.handlePaisChange}
+                          onChange={(e) => this.setState({pais: e.target.value})}
                         />
                   </Grid>
                   <Grid item justify="flex-end" container xs={12}>

@@ -12,7 +12,7 @@ import axios from 'axios';
 export default class UserForm extends Component{
   state = {
     cnpj: '',
-    razaoSocial: '',
+    razaosocial: '',
     rua: '',
     numero: '',
     complemento: '',
@@ -40,26 +40,6 @@ export default class UserForm extends Component{
     await this.setState({cnpjValidator: invalid, cnpj: formatted});
   }
 
-  handleRazaoSocialChange = async (event) =>
-  {
-    await this.setState({ razaoSocial: event.target.value });
-  }
-
-  handleRuaChange = async (event) =>
-  {
-    await this.setState({ rua: event.target.value });
-  }
-
-  handleNumeroChange = async (event) =>
-  {
-    await this.setState({ numero: event.target.value });
-  }
-
-  handleComplementoChange = async (event) =>
-  {
-    await this.setState({ complemento: event.target.value });
-  }
-
   handleCepChange = async (event) =>
   {
     const cepDigitado = event.target.value;
@@ -69,13 +49,13 @@ export default class UserForm extends Component{
     {
       await axios.get(`https://viacep.com.br/ws/${cepDigitado}/json/`).then(response => {
         if(!response.data.error) {
-          const result = response.data;
+          const {logradouro, complemento, bairro, localidade, uf} = response.data;
           this.setState({
-            rua: result.logradouro,
-            complemento: result.complemento,
-            bairro: result.bairro,
-            cidade: result.localidade,
-            uf: result.uf        
+            rua: logradouro ? logradouro : '',
+            complemento: complemento ? complemento : '',
+            bairro: bairro ? bairro : '',
+            cidade: localidade ? localidade : '',
+            uf: uf ? uf : ''
           })
         } else {
           this.setState({
@@ -98,40 +78,31 @@ export default class UserForm extends Component{
     }
   }
 
-  handleBairroChange = async (event) =>
-  {
-    await this.setState({ bairro: event.target.value });
-  }
-  
-  handleUfChange = async (event) =>
-  {
-    await this.setState({ uf: event.target.value });
-  }
-
-  handleCidadeChange = async (event) =>
-  {
-    await this.setState({ cidade: event.target.value });
-  }
-
-  handlePaisChange = async (event) =>
-  {
-    await this.setState({ pais: event.target.value });
-  }
-
   saveCliente = async (e) => {
     const cnpjValue = cnpj.strip(this.state.cnpj);
-
+    const {
+      razaosocial,
+      rua,
+      numero,
+      cep,
+      complemento,
+      bairro,
+      cidade,
+      uf,
+      pais
+    } = this.state;
     if (cnpjValue && !this.state.cnpjValidator) {
           api.post('/cliente', {
             cpf_cnpj: cnpjValue,
-            razaosocial: this.state.razaoSocial,
-            rua: this.state.logradouro,
-            numero: this.state.numero,
-            cep: this.state.cep,
-            complemento: this.state.complemento,
-            bairro: this.state.bairro,
-            cidade: this.state.cidade,
-            uf: this.state.uf
+            razaosocial,
+            rua,
+            numero,
+            cep,
+            complemento,
+            bairro,
+            cidade,
+            uf,
+            pais
           }).then(response => 
             swal("Sucesso!", "Cliente criado.", "success").then(
               this.props.history.push("/client")
@@ -139,7 +110,7 @@ export default class UserForm extends Component{
         ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
     }
     else {
-      swal("Campos inválidos.", "Tente novamente.", "error")
+      swal("Campos inválidos.", "Verifique se todos os campos obrigatórios estão preenchidos.", "error");
     }
   }
 
@@ -154,10 +125,10 @@ export default class UserForm extends Component{
                       <TextField
                           required
                           fullWidth
-                          id="razaoSocial"
-                          name="razaoSocial"
+                          id="razaosocial"
+                          name="razaosocial"
                           label="Razão Social"
-                          onChange={this.handleRazaoSocialChange}
+                          onChange={(e) => this.setState({razaosocial: e.target.value})}
                         />
                   </Grid>
                   <Grid item sm={6} xs={12}>
@@ -199,7 +170,7 @@ export default class UserForm extends Component{
                           label="Numero"
                           type="number"
                           value={this.state.numero}
-                          onChange={this.handleNumeroChange}
+                          onChange={(e) => this.setState({numero: e.target.value})}
                         />
                   </Grid>
                   <Grid item xs={12} sm={3}>
@@ -209,7 +180,7 @@ export default class UserForm extends Component{
                           name="complemento"
                           label="Complemento"
                           value={this.state.complemento}
-                          onChange={this.handleComplementoChange}
+                          onChange={(e) => this.setState({complemento: e.target.value})}
                         />
                   </Grid>
                   <Grid item sm={5} xs={12} >
@@ -220,7 +191,7 @@ export default class UserForm extends Component{
                           name="rua"
                           label="Rua"
                           value={this.state.rua}
-                          onChange={this.handleRuaChange}
+                          onChange={(e) => this.setState({rua: e.target.value})}
                         />
                   </Grid>
                   <Grid item sm={3} xs={12} >
@@ -231,7 +202,7 @@ export default class UserForm extends Component{
                           name="bairro"
                           label="Bairro"
                           value={this.state.bairro}
-                          onChange={this.handleBairroChange}
+                          onChange={(e) => this.setState({bairro: e.target.value})}
                         />
                   </Grid>
                   <Grid item sm={3} xs={12}>
@@ -242,7 +213,7 @@ export default class UserForm extends Component{
                           name="cidade"
                           label="Cidade"
                           value={this.state.cidade}
-                          onChange={this.handleCidadeChange}
+                          onChange={(e) => this.setState({cidade: e.target.value})}
                         />
                   </Grid>
                   <Grid item sm={3} xs={12}>
@@ -253,7 +224,7 @@ export default class UserForm extends Component{
                           name="uf"
                           label="UF"
                           value={this.state.uf}
-                          onChange={this.handleUfChange}
+                          onChange={(e) => this.setState({uf: e.target.value})}
                         />
                   </Grid>
                   <Grid item sm={3} xs={12}>
@@ -264,7 +235,7 @@ export default class UserForm extends Component{
                           name="pais"
                           label="Pais"
                           value={this.state.pais}
-                          onChange={this.handlePaisChange}
+                          onChange={(e) => this.setState({pais: e.target.value})}
                         />
                   </Grid>
                   <Grid item justify="flex-end" container xs={12}>

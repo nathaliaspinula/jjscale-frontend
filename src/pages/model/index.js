@@ -94,7 +94,7 @@ export default class Model extends Component {
                                 <div>
                                     <MTableToolbar {...props}/>
                                     <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '10px' }}>
-                                        <Link to="/user/new" className="button">Novo Usuário</Link>
+                                        <Link to="/model/new" className="button">Novo Modelo</Link>
                                     </div>
                                 </div>
                             )

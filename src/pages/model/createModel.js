@@ -18,18 +18,16 @@ export default class ModelForm extends Component{
     saveUser = async () => {
       const { ola } = this.state;
 
-      console.log(this.state)
-
-    if (ola) {
-          api.post('/modelo', { payload: ola }).then(response => 
-            swal("Sucesso!", "Modelo criado.", "success").then(
-              this.props.history.push("/model")
-            )
-        ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
-    }
-    else {
-      swal("Campos inválidos.", "Tente novamente.", "error")
-    }
+      if (ola) {
+            api.post('/modelo', { payload: ola }).then(response => 
+              swal("Sucesso!", "Modelo criado.", "success").then(
+                this.props.history.push("/model")
+              )
+          ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
+      }
+      else {
+        swal("Campos inválidos.", "Tente novamente.", "error")
+      }
   }
 
   render() {

@@ -22,23 +22,22 @@ import {Link} from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import swal from 'sweetalert';
 
-export default class Users extends Component {
+export default class Model extends Component {
 
     state = {
-        users: [],
+        models: [],
         isLoading: true
     }
     
     componentDidMount() {
-        this.loadUsers();
+        this.loadModels();
     }
     
-    loadUsers = async () =>
+    loadModels = async () =>
     {
         await api.get('/modelo').then(response => {
-            console.log(response);
-            // const users = response.data.map(item => ({...item, cpf: cpfLib.format(item.cpf) }))
-            // this.setState({ users: users, isLoading: false });
+            const models = response.data;
+            this.setState({ models, isLoading: false });
         }).catch(error => {
             swal("Ocorreu um erro!", "Tente novamente.", "error").then(
                 this.setState({ isLoading: false })
@@ -71,25 +70,24 @@ export default class Users extends Component {
             <Context>
                     <MaterialTable
                         icons={tableIcons}
-                        title="Usuários"
+                        title="Modelos"
                         columns={[
-                            { title: 'Nome', field: 'name' },
-                            { title: 'Email', field: 'email' },
-                            { title: 'CPF', field: 'cpf' },
-                            { title: 'Ação', field: 'id', editable: 'never',
+                            { title: 'Tópico', field: 'topico' },
+                            { title: 'Descrição', field: 'descricao' },
+                            { title: 'Ação', field: 'idmodelo', editable: 'never',
                              render: rowData =>
                                 <React.Fragment>
-                                    <Link to={`/user/${rowData.id}`}>
+                                    <Link to={`/model/${rowData.id}`}>
                                         <EditIcon color="action" fontSize="small"/>
                                     </Link>
-                                    <Link to={`/user/${rowData.id}`}>
+                                    <Link to={`/model/${rowData.id}`}>
                                         <DeleteIcon color="action" fontSize="small"/>
                                     </Link>
                                 </React.Fragment>
                             }
                         ]}
                         data={
-                            this.state.users
+                            this.state.models
                         }
                         components={{
                             Toolbar: props => (

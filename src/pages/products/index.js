@@ -16,13 +16,12 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-import {cpf as cpfLib} from 'cpf-cnpj-validator';
 import api from '../../services/api';
 import {Link} from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import swal from 'sweetalert';
 
-export default class Users extends Component {
+export default class Products extends Component {
 
     state = {
         products: [],

@@ -1,13 +1,13 @@
 import React from 'react';
 import {Editor, EditorState, RichUtils, getDefaultKeyBinding} from 'draft-js';
-
+import {stateToHTML} from 'draft-js-export-html';
 import './css/example.css';
 import './css/draft.css';
 import './css/rich-editor.css';
 
 const {useState, useRef, useCallback} = React;
 
-function RichEditorExample(props) {
+function RichEditorExample(props, { callback }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const editor = useRef(null);
 
@@ -51,6 +51,12 @@ function RichEditorExample(props) {
   // either style the placeholder or hide it. Let's just hide it now.
   let className = 'RichEditor-editor';
   var contentState = editorState.getCurrentContent();
+  
+  function funcSave() {
+    const payload = stateToHTML(contentState);
+    return props.callback(payload);
+  }
+
   if (!contentState.hasText()) {
     if (
       contentState
@@ -89,6 +95,7 @@ function RichEditorExample(props) {
           handleKeyCommand={handleKeyCommand}
           keyBindingFn={mapKeyToEditorCommand}
           onChange={setEditorState}
+          onBlur={funcSave}
           placeholder="Digite..."
           ref={editor}
           spellCheck={true}

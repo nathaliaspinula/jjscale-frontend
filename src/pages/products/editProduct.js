@@ -12,6 +12,7 @@ export default class Product extends Component{
   state = {
     requisito: '',
     descricao: '',
+    titulo: ''
   }
 
   componentDidMount() {
@@ -19,13 +20,13 @@ export default class Product extends Component{
   }
 
   loadProduct = async () => {
-    const {id} = this.props.match.params;
+    const { id } = this.props.match.params;
     await api.get(`/produto/${id}`).then(response => {
-     const produto = response.data[0];
+     const {idproduto, descricao, requisito} = response.data.find(produto => produto.idproduto.toString() === id);
      this.setState({
-       id: produto.idproduto,
-       descricao: produto.descricao,
-       requisito: produto.requisito
+       id: idproduto,
+       descricao,
+       requisito
       });
     }).catch(error => {
         swal("Ocorreu um erro!", "Tente novamente.", "error").then(
@@ -35,22 +36,20 @@ export default class Product extends Component{
   }
 
   saveProduct = async (e) => {
-    api.post('/produto', {
-      descricao: this.state.descricao,
-      requisito: this.state.requisito,
-    }).then(response => 
-      swal("Sucesso!", "Produto editado.", "success").then(
-        this.props.history.push("/product")
-      )
-    ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
-  }
-
-  handleRequisitoChange = (e) => {
-    this.setState({requisito: e.target.value});
-  }
-
-  handleDescricaoChange = (e) => {
-    this.setState({descricao: e.target.value});
+    const { titulo, descricao, requisito } = this.state;
+    if (descricao && titulo) {
+      api.post('/produto', {
+        descricao,
+        requisito,
+        titulo
+      }).then(response => 
+        swal("Sucesso!", "Produto editado.", "success").then(
+          this.props.history.push("/product")
+        )
+      ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
+    } else {
+      swal("Ocorreu um erro!", "Verifique se todos os campos obrigatórios estão preenchidos.", "error")
+    }
   }
 
   render() {
@@ -60,6 +59,15 @@ export default class Product extends Component{
                   Novo Produto
               </Typography>
               <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                     <TextField
+                        name="titulo"
+                        label="Título"
+                        fullWidth
+                        value={this.state.titulo}
+                        onChange={(e) => this.setState({titulo: e.target.value})}
+                      />
+                  </Grid>
                   <Grid item xs={12} sm={12}>
                     <div style={{marginBottom: '10px'}}>
                       <label>Descrição</label>
@@ -67,18 +75,16 @@ export default class Product extends Component{
                     <TextareaAutosize
                       rowsMax={4}
                       value={this.state.descricao}
-                      onChange={this.handleDescricaoChange}
+                      onChange={(e) => this.setState({descricao: e.target.value})}
                     />
                   </Grid>
                   <Grid item xs={12}>
                      <TextField
-                        required
-                        id="requisito"
                         name="requisito"
                         label="Requisitos"
                         fullWidth
                         value={this.state.requisito}
-                        onChange={this.handleRequisitoChange}
+                        onChange={(e) => this.setState({requisito: e.target.value})}
                       />
                   </Grid>
                   <Grid item justify="flex-end" container xs={12}>

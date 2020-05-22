@@ -71,6 +71,7 @@ export default class Products extends Component {
                         icons={tableIcons}
                         title="Produtos"
                         columns={[
+                            { title: 'Título', field: 'titulo' },
                             { title: 'Descrição', field: 'descricao' },
                             { title: 'Requisito', field: 'requisito' },
                             { title: 'Ação', field: 'id', editable: 'never',

@@ -1,10 +1,9 @@
 import React, { Component }from 'react';
-import Context from '../../components/context';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import Container from '@material-ui/core/Container';
 import api from '../../services/api';
 import swal from 'sweetalert';
 
@@ -20,15 +19,15 @@ export default class Product extends Component{
   }
 
   loadProduct = async () => {
-    const { id } = this.props.match.params;
+    const id = this.props.id;
     await api.get(`/produto/${id}`).then(response => {
-      const {idproduto, descricao, requisito, titulo} = response.data.find(produto => produto.idproduto === id);
-      this.setState({
-        id: idproduto,
-        descricao,
-        requisito,
-        titulo
-       });
+     const {idproduto, descricao, requisito, titulo} = response.data.find(produto => produto.idproduto === id);
+     this.setState({
+       id: idproduto,
+       descricao,
+       requisito,
+       titulo
+      });
     }).catch(error => {
         swal("Ocorreu um erro!", "Tente novamente.", "error").then(
             this.setState({ isLoading: false })
@@ -36,28 +35,11 @@ export default class Product extends Component{
     });
   }
 
-  saveProduct = async (e) => {
-    const { titulo, descricao, requisito } = this.state;
-    if (descricao && titulo) {
-      api.post('/produto', {
-        descricao,
-        requisito,
-        titulo
-      }).then(response => 
-        swal("Sucesso!", "Produto editado.", "success").then(
-          this.props.history.push("/product")
-        )
-      ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
-    } else {
-      swal("Ocorreu um erro!", "Verifique se todos os campos obrigatórios estão preenchidos.", "error")
-    }
-  }
-
   render() {
     return (
-        <Context container="true">
+        <Container maxWidth="sm" className="paper-view">
               <Typography variant="h6" gutterBottom>
-                  Novo Produto
+                  Visualizar Produto
               </Typography>
               <Grid container spacing={3}>
                   <Grid item xs={12}>
@@ -65,6 +47,7 @@ export default class Product extends Component{
                         name="titulo"
                         label="Título"
                         fullWidth
+                        disabled
                         value={this.state.titulo}
                         onChange={(e) => this.setState({titulo: e.target.value})}
                       />
@@ -74,6 +57,7 @@ export default class Product extends Component{
                       <label>Descrição</label>
                     </div>
                     <TextareaAutosize
+                        disabled
                       rowsMax={4}
                       value={this.state.descricao}
                       onChange={(e) => this.setState({descricao: e.target.value})}
@@ -83,16 +67,14 @@ export default class Product extends Component{
                      <TextField
                         name="requisito"
                         label="Requisitos"
+                        disabled
                         fullWidth
                         value={this.state.requisito}
                         onChange={(e) => this.setState({requisito: e.target.value})}
                       />
                   </Grid>
-                  <Grid item justify="flex-end" container xs={12}>
-                    <Button size="small" variant="contained" onClick={this.saveProduct}>Salvar</Button>
-                  </Grid>
               </Grid>
-        </Context>
+        </Container>
     );
   }
 }

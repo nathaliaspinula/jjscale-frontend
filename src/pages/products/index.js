@@ -16,20 +16,35 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import Modal from '@material-ui/core/Modal'
 import api from '../../services/api';
 import {Link} from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import swal from 'sweetalert';
+import ViewProduct from './viewProduct';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export default class Products extends Component {
 
     state = {
         products: [],
-        isLoading: true
+        idProduto: '',
+        isLoading: true,
+        open: false
     }
     
     componentDidMount() {
         this.loadProducts();
+    }
+
+    handleOpen = () => {
+        this.setState({open: true});
+    };
+
+    viewProduct = (idproduto) => {
+        this.setState({ idProduto: idproduto });
+        this.handleOpen();
     }
     
     loadProducts = async () =>
@@ -67,6 +82,16 @@ export default class Products extends Component {
         
         return (
             <Context >
+                    <Modal
+                        open={this.state.open}
+                        onClose={(e) => this.setState({open: false, idProduto: ''})}
+                        onEscapeKeyDown={(e) => this.setState({open: false, idProduto: ''})}
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        className="modal-view"
+                    >
+                        <ViewProduct id={this.state.idProduto}/>
+                    </Modal>
                     <MaterialTable
                         icons={tableIcons}
                         title="Produtos"
@@ -75,10 +100,16 @@ export default class Products extends Component {
                             { title: 'Descrição', field: 'descricao' },
                             { title: 'Requisito', field: 'requisito' },
                             { title: 'Ação', field: 'id', editable: 'never',
-                             render: rowData => 
-                                <Link to={`/product/${rowData.idproduto}`}>
-                                    <EditIcon color="action" fontSize="small"/>
-                                </Link>
+                             render: rowData =>
+                                <div>
+                                    <VisibilityIcon onClick={() => this.viewProduct(rowData.idproduto)} color="action" fontSize="small"/>
+                                    <Link to={`/product/${rowData.idproduto}`}>
+                                        <EditIcon color="action" fontSize="small"/>
+                                    </Link>
+                                    <Link to={`/client/${rowData.idproduto}`}>
+                                        <DeleteIcon color="action" fontSize="small"/>
+                                    </Link>
+                                </div>
                             }
                         ]}
                         data={

@@ -34,15 +34,20 @@ export default class UserForm extends Component{
 
   saveProject = async (e) => {
     const { nome, apelido, cliente } = this.state;
-    api.post('/projeto', {
-      nome,
-      apelido,
-      idcliente: cliente
-    }).then(response => 
-      swal("Sucesso!", "Projeto criado.", "success").then(
-        this.props.history.push("/project")
-      )
-    ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
+    if(nome && cliente) {
+      api.post('/projeto', {
+        nome,
+        apelido,
+        idcliente: cliente
+      }).then(response => 
+        swal("Sucesso!", "Projeto criado.", "success").then(
+          this.props.history.push("/project")
+        )
+      ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
+    } else {
+      swal("Campos inválidos.", "Verifique se todos os campos obrigatórios estão preenchidos.", "error")
+    }
+
   }
 
   render() {
@@ -75,21 +80,21 @@ export default class UserForm extends Component{
                 />
             </Grid>
             <Grid item xs={12}>
-            <InputLabel id="cliente-label">Cliente</InputLabel>
-            <Select
-              required
-              labelId="cliente"
-              id="cliente"
-              value={this.state.cliente}
-              onChange={(e) => this.setState({cliente: e.target.value})}
-              input={<Input />}
-              fullWidth
-              >
-              {this.state.clientes.map(item => 
-                  <MenuItem key={Math.random()} value={item.idcliente}>
-                  {item.razaosocial}
-                  </MenuItem>
-              )}
+              <InputLabel id="cliente-label">Cliente</InputLabel>
+              <Select
+                required
+                labelId="cliente"
+                id="cliente"
+                value={this.state.cliente}
+                onChange={(e) => this.setState({cliente: e.target.value})}
+                input={<Input />}
+                fullWidth
+                >
+                {this.state.clientes.map(item => 
+                    <MenuItem key={Math.random()} value={item.idcliente}>
+                    {item.razaosocial}
+                    </MenuItem>
+                )}
               </Select>
             </Grid>
             <Grid item justify="flex-end" container xs={12}>

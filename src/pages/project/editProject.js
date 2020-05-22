@@ -29,12 +29,12 @@ export default class EditProject extends Component{
   {
       const {id} = this.props.match.params;
        await api.get(`/projeto/${id}`).then(response => {
-        const project = response.data[0];
+        const { idprojeto, nome, apelido, idcliente } = response.data.find(projeto => projeto.idprojeto.toString() === id);
         this.setState({
-          id: project.idprojeto,
-          nome: project.nome,
-          apelido: project.apelido,
-          idcliente: project.idcliente
+          id: idprojeto,
+          nome,
+          apelido,
+          idcliente
        });
        this.loadClients();
       }).catch(error => {
@@ -57,81 +57,76 @@ export default class EditProject extends Component{
   }
 
   saveProject = async (e) => {
-    api.put('/projeto', {
-      idprojeto: this.state.id,
-      nome: this.state.nome,
-      apelido: this.state.apelido,
-      idcliente: this.state.cliente
-    }).then(response =>
-      swal("Sucesso!", "Projeto alterado.", "success").then(
-        this.props.history.push("/project")
-      )
-    ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
-  }
-
-  handleNomeChange = (e) => {
-    this.setState({ nome: e.target.value });
-  }
-
-  handleApelidoChange = (e) => {
-    this.setState({ apelido: e.target.value });
-  }
-
-  handleClienteChange = (e) => {
-    this.setState({ cliente: e.target.value });
+    const { id, nome, apelido, cliente } = this.state;
+    console.log(cliente)
+    if(id && nome && apelido && cliente) {
+      api.put('/projeto', {
+        idprojeto: id,
+        nome,
+        apelido,
+        idcliente: cliente
+      }).then(response =>
+        swal("Sucesso!", "Projeto alterado.", "success").then(
+          this.props.history.push("/project")
+        )
+      ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
+    } else {
+      swal("Ocorreu um erro!", "Verifique se todos os campos obrigatórios estão preenchidos.", "error")
+    }
+   
   }
 
   render() {
     return (
         <Context container="true">
-              <Typography variant="h6" gutterBottom>
-                  Editar Projeto
-              </Typography>
-              <Grid container spacing={3}>
-                  <Grid item xs={12}>
-                     <TextField
-                        required
-                        fullWidth
-                        id="nome"
-                        name="nome"
-                        label="Nome"
-                        value={this.state.nome}
-                        onChange={this.handleNomeChange}
-                      />
-                  </Grid>
-                  <Grid item xs={12}>
-                     <TextField
-                        required
-                        fullWidth
-                        id="apelido"
-                        name="apelido"
-                        label="Apelido"
-                        value={this.state.apelido}
-                        onChange={this.handleApelidoChange}
-                      />
-                  </Grid>
-                  <Grid item xs={12}>
-                  <InputLabel id="cliente-label">Cliente</InputLabel>
-                  <Select
-                    required
-                    labelId="cliente"
-                    id="cliente"
-                    value={this.state.cliente}
-                    onChange={this.handleClienteChange}
-                    input={<Input />}
-                    fullWidth
-                    >
-                    {this.state.clientes.map(item => 
-                        <MenuItem key={Math.random()} value={item.idcliente}>
-                        {item.razaosocial}
-                        </MenuItem>
-                    )}
-                    </Select>
-                  </Grid>
-                  <Grid item justify="flex-end" container xs={12}>
-                    <Button size="small" variant="contained" onClick={this.saveProject}>Salvar</Button>
-                  </Grid>
+          <Typography variant="h6" gutterBottom>
+              Editar Projeto
+          </Typography>
+          <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="nome"
+                  name="nome"
+                  label="Nome"
+                  value={this.state.nome}
+                  onChange={(e) => this.setState({nome: e.target.value})}
+                  />
               </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="apelido"
+                  name="apelido"
+                  label="Apelido"
+                  value={this.state.apelido}
+                  onChange={(e) => this.setState({apelido: e.target.value})}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputLabel id="cliente-label">Cliente</InputLabel>
+                <Select
+                  required
+                  labelId="cliente"
+                  id="cliente"
+                  value={this.state.cliente}
+                  onChange={(e) => this.setState({cliente: e.target.value})}
+                  input={<Input />}
+                  fullWidth
+                  >
+                  {this.state.clientes.map(item => 
+                      <MenuItem key={Math.random()} value={item.idcliente}>
+                      {item.razaosocial}
+                      </MenuItem>
+                  )}
+                </Select>
+              </Grid>
+              <Grid item justify="flex-end" container xs={12}>
+                <Button size="small" variant="contained" onClick={this.saveProject}>Salvar</Button>
+              </Grid>
+          </Grid>
         </Context>
     );
   }

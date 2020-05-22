@@ -11,6 +11,7 @@ import Context from '../../components/context';
 import api from '../../services/api';
 import swal from 'sweetalert';
 import Editor from '../../components/editor';
+import { stateFromHTML } from 'draft-js-import-html';
 
 export default class ModelForm extends Component{
   constructor(props) {
@@ -25,10 +26,31 @@ export default class ModelForm extends Component{
   }
   
   componentDidMount() {
-    this.loadProducts();
+    this.loadModel();
   }
 
-  saveModel = async () => {
+  loadModel = async(e) => {
+    const { id } = this.props.match.params;
+    await api.get(`/modelo/${id}`).then(response => {
+        const { topico, descricao, json } = response.data.find(item => item.idmodelo.toString() === id);
+        const contentState = stateFromHTML(json);
+        console.log(contentState)
+        this.setState({ topico, descricao, isLoading: false });
+    }).catch(error => {
+        swal("Ocorreu um erro!", "Tente novamente.", "error")
+    });
+  }
+
+  loadProducts = async (e) => {
+    await api.get('/produto').then(response => {
+      const produtos = response.data;
+      this.setState({ produtos, isLoading: false });
+    }).catch(error => {
+        swal("Ocorreu um erro!", "Tente novamente.", "error")
+    });
+  }
+
+  saveUser = async () => {
       const { topico, descricao, editor } = this.state;
       if (editor && topico) {
             api.post('/modelo', { 
@@ -45,15 +67,6 @@ export default class ModelForm extends Component{
       }
   }
 
-  loadProducts = async (e) => {
-    await api.get('/produto').then(response => {
-      const produtos = response.data;
-      this.setState({ produtos, isLoading: false });
-    }).catch(error => {
-        swal("Ocorreu um erro!", "Tente novamente.", "error")
-    });
-  }
-
   handleProductChange = async(e) => {
     const produto = e.target.value;
     
@@ -67,7 +80,7 @@ export default class ModelForm extends Component{
   }
 
   render() {
-    const {produtos} = this.state;
+    const { produtos } = this.state;
     return (
         <Context container="true">
           <Typography variant="h6" gutterBottom>
@@ -119,7 +132,7 @@ export default class ModelForm extends Component{
               />
             </Grid>
           <Grid item justify="flex-end" container xs={12}>
-            <Button size="small" variant="contained" onClick={this.saveModel}>Salvar</Button>
+            <Button size="small" variant="contained" onClick={this.saveUser}>Salvar</Button>
           </Grid>
         </Grid>
       </Context>

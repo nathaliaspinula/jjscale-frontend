@@ -77,10 +77,10 @@ export default class Model extends Component {
                             { title: 'Ação', field: 'idmodelo', editable: 'never',
                              render: rowData =>
                                 <React.Fragment>
-                                    <Link to={`/model/${rowData.id}`}>
+                                    <Link to={`/model/${rowData.idmodelo}`}>
                                         <EditIcon color="action" fontSize="small"/>
                                     </Link>
-                                    <Link to={`/model/${rowData.id}`}>
+                                    <Link to={`/model/${rowData.idmodelo}`}>
                                         <DeleteIcon color="action" fontSize="small"/>
                                     </Link>
                                 </React.Fragment>

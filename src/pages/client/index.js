@@ -17,9 +17,12 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import Modal from '@material-ui/core/Modal'
 import {cnpj} from 'cpf-cnpj-validator';
 import api from '../../services/api';
 import {Link} from 'react-router-dom';
+import ViewClient from './viewClient';
 import EditIcon from '@material-ui/icons/Edit';
 import swal from 'sweetalert';
 import './styles.css';
@@ -28,12 +31,15 @@ export default class Client extends Component {
 
     state = {
         clientes: [],
-        isLoading: true
+        idCliente: '',
+        isLoading: true,
+        open: false
     }
     
     componentDidMount() {
         this.loadUsers();
     }
+    
     
     loadUsers = async () =>
     {
@@ -47,7 +53,17 @@ export default class Client extends Component {
         });
     }
 
+    handleOpen = () => {
+        this.setState({open: true});
+    };
+
+    viewClient = (idcliente) => {
+        this.setState({ idCliente: idcliente });
+        this.handleOpen();
+    }
+
     render() {
+        
         const tableIcons = {
             Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
             Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -70,6 +86,16 @@ export default class Client extends Component {
         
         return (
             <Context>
+                    <Modal
+                        open={this.state.open}
+                        onClose={(e) => this.setState({open: false, idCliente: ''})}
+                        onEscapeKeyDown={(e) => this.setState({open: false, idCliente: ''})}
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        className="modal-view"
+                    >
+                        <ViewClient id={this.state.idCliente}/>
+                    </Modal>
                     <MaterialTable
                         icons={tableIcons}
                         title="Clientes"
@@ -79,6 +105,7 @@ export default class Client extends Component {
                             { title: 'Ação', field: 'idcliente', editable: 'never',
                              render: rowData =>
                                 <React.Fragment>
+                                    <VisibilityIcon onClick={() => this.viewClient(rowData.idcliente)} color="action" fontSize="small"/>
                                     <Link to={`/client/${rowData.idcliente}`}>
                                         <EditIcon color="action" fontSize="small"/>
                                     </Link>
@@ -108,6 +135,7 @@ export default class Client extends Component {
                         }}
                         isLoading={this.state.isLoading}
                     />
+                    
             </Context>
         );
     };

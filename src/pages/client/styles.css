@@ -9,3 +9,16 @@
 .not-visible {
     display: none;
 }
+
+.paper-view {
+    background-color:#ffffff !important;
+    padding: 20px;
+    border: 2px solid rgb(206, 206, 206);
+    border-radius: 6px;
+}
+
+.modal-view {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

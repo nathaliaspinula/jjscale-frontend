@@ -12,25 +12,20 @@ export default class UserForm extends Component{
   state = {
     requisito: '',
     descricao: '',
+    titulo: ''
   }
 
   saveProduct = async (e) => {
+    const {titulo, descricao, requisito} = this.state;
     api.post('/produto', {
-      descricao: this.state.descricao,
-      requisito: this.state.requisito,
+      descricao,
+      requisito,
+      titulo
     }).then(response => 
       swal("Sucesso!", "Produto criado.", "success").then(
         this.props.history.push("/product")
       )
     ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
-  }
-
-  handleRequisitoChange = (e) => {
-    this.setState({requisito: e.target.value});
-  }
-
-  handleDescricaoChange = (e) => {
-    this.setState({descricao: e.target.value});
   }
 
   render() {
@@ -40,23 +35,31 @@ export default class UserForm extends Component{
                   Novo Produto
               </Typography>
               <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                     <TextField
+                        name="titulo"
+                        label="Título"
+                        fullWidth
+                        value={this.state.titulo}
+                        onChange={(e) => this.setState({titulo: e.target.value})}
+                      />
+                  </Grid>
                   <Grid item xs={12} sm={12}>
                     <div style={{marginBottom: '10px'}}>
                       <label>Descrição</label>
                     </div>
                     <TextareaAutosize
                       rowsMax={4}
-                      onChange={this.handleDescricaoChange}
+                      onChange={(e) => this.setState({descricao: e.target.value})}
                     />
                   </Grid>
                   <Grid item xs={12}>
                      <TextField
-                        required
                         id="requisito"
                         name="requisito"
                         label="Requisitos"
                         fullWidth
-                        onChange={this.handleRequisitoChange}
+                        onChange={(e) => this.setState({requisito: e.target.value})}
                       />
                   </Grid>
                   <Grid item justify="flex-end" container xs={12}>

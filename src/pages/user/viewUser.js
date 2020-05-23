@@ -1,14 +1,11 @@
 import React, { Component }from 'react';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import Context from '../../components/context';
-import {emailCheck} from '../../components/utils/utils';
-import {cpf as cpfLib} from 'cpf-cnpj-validator';
+import Container from '@material-ui/core/Container';
 import api from '../../services/api';
 import swal from 'sweetalert';
-
+import {cpf as cpfLib} from 'cpf-cnpj-validator';
 export default class UserEditForm extends Component{
     state = {
         id: '',
@@ -26,9 +23,9 @@ export default class UserEditForm extends Component{
 
     loadUsers = async () =>
     {
-        const idUser = this.props.match.params.id;
+        const idUser = this.props.id;
         await api.get(`/user/${idUser}`).then(response => {
-            const { id, cpf, name, email } = response.data.find(user => user.id.toString() === idUser);
+            const { id, cpf, name, email } = response.data.find(user => user.id === idUser);
             const cpfFormatted = cpfLib.format(cpf);
             this.setState({
                 id,
@@ -41,82 +38,29 @@ export default class UserEditForm extends Component{
         });
     }
 
-    handleNameChange = async (event) =>
-    {
-        await this.setState({name: event.target.value});
-    }
-
-    handleCpfChange = async (event) =>
-    {
-        const value = event.target.value;
-        let formatted = value;
-        let invalid = false;
-    
-        if (value.length <= 11) {
-          formatted = cpfLib.format(value);
-        }
-        if(!cpfLib.isValid(value))
-        {
-          invalid = true;
-        }
-        await this.setState({cpfValidator: invalid, cpf: formatted});
-    }
-
-    handleEmailChange = async (event) => {
-        const value = event.target.value;
-        if(emailCheck(value))
-        {
-        await this.setState({emailValidator: false, email: value});
-        }
-        else {
-        await this.setState({emailValidator: true, email: value});
-        }
-    }
-
-    saveUser = async (e) => {
-        const name = this.state.name;
-        const email = this.state.email;
-        const id = this.state.id;
-        const cpfValue = cpfLib.strip(this.state.cpf);
-
-        if (name && email && cpfValue && !this.state.cpfValidator && !this.state.emailValidator) {
-            api.put('/user', {
-                id: id,
-                name: name,
-                email: email,
-                cpf: cpfValue
-            }).then(response => 
-                swal("Sucesso!", "Dados atualizados.", "success").then(
-                    this.props.history.push("/user")
-                  )
-                ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
-        }
-        else {
-            swal("Campos inválidos.", "Tente novamente.", "error")
-        }
-    }
-
     render() {
         return (
-            <Context container="true">
+            <Container maxWidth="sm" className="paper-view">
                 <Typography variant="h6" gutterBottom>
-                    Editar Usuário
+                    Visualizar Usuário
                 </Typography>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={12}>
                         <TextField
                             required
+                            disabled
                             id="name"
                             name="name"
                             label="Nome Completo"
                             fullWidth
                             value={this.state.name}
-                            onChange={(e) => {this.setState({name: e.target.value})}}
+                            onChange={this.handleNameChange}
                             />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
                             required
+                            disabled
                             id="cpf"
                             name="cpf"
                             label="CPF"
@@ -135,6 +79,7 @@ export default class UserEditForm extends Component{
                     <Grid item xs={12} sm={6}>
                         <TextField
                             required
+                            disabled
                             id="email"
                             name="email"
                             label="Email"
@@ -146,11 +91,8 @@ export default class UserEditForm extends Component{
                             }
                             />
                     </Grid>
-                    <Grid item justify="flex-end" container xs={12}>
-                        <Button size="small" variant="contained" onClick={this.saveUser}>Salvar</Button>
-                    </Grid>
                 </Grid>
-            </Context>
+            </Container>
         );
     }
 }

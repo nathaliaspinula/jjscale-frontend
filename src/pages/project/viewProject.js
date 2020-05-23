@@ -1,14 +1,13 @@
 import React, { Component }from 'react';
-import Context from '../../components/context';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
-import api from '../../services/api';
 import MenuItem from '@material-ui/core/MenuItem';
+import Container from '@material-ui/core/Container';
+import api from '../../services/api';
 import swal from 'sweetalert';
 
 export default class EditProject extends Component{
@@ -27,21 +26,19 @@ export default class EditProject extends Component{
 
   loadProject = async () =>
   {
-      const {id} = this.props.match.params;
-       await api.get(`/projeto/${id}`).then(response => {
-        const { idprojeto, nome, apelido, idcliente } = response.data.find(projeto => projeto.idprojeto.toString() === id);
+    const id = this.props.id;
+    await api.get(`/projeto/${id}`).then(response => {
+        const { idprojeto, nome, apelido, idcliente } = response.data.find(projeto => projeto.idprojeto === id);
         this.setState({
-          id: idprojeto,
-          nome,
-          apelido,
-          idcliente
-       });
-       this.loadClients();
-      }).catch(error => {
-          swal("Ocorreu um erro!", "Tente novamente.", "error").then(
-              this.setState({ isLoading: false })
-          );
-      });
+            id: idprojeto,
+            nome,
+            apelido,
+            idcliente
+        });
+        this.loadClients();
+    }).catch(error => {
+        swal("Ocorreu um erro!", "Tente novamente.", "error")
+    });
   }
 
   loadClients = async (e) => {
@@ -56,36 +53,18 @@ export default class EditProject extends Component{
     });
   }
 
-  saveProject = async (e) => {
-    const { id, nome, apelido, cliente } = this.state;
-    if(id && nome && apelido && cliente) {
-      api.put('/projeto', {
-        idprojeto: id,
-        nome,
-        apelido,
-        idcliente: cliente
-      }).then(response =>
-        swal("Sucesso!", "Projeto alterado.", "success").then(
-          this.props.history.push("/project")
-        )
-      ).catch(error => swal("Ocorreu um erro!", "Tente novamente.", "error"));
-    } else {
-      swal("Ocorreu um erro!", "Verifique se todos os campos obrigatórios estão preenchidos.", "error")
-    }
-   
-  }
-
   render() {
     return (
-        <Context container="true">
+        <Container maxWidth="sm" className="paper-view">
           <Typography variant="h6" gutterBottom>
-              Editar Projeto
+              Visualizar Projeto
           </Typography>
           <Grid container spacing={3}>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
+                  disabled
                   id="nome"
                   name="nome"
                   label="Nome"
@@ -97,6 +76,7 @@ export default class EditProject extends Component{
                 <TextField
                   required
                   fullWidth
+                  disabled
                   id="apelido"
                   name="apelido"
                   label="Apelido"
@@ -108,6 +88,7 @@ export default class EditProject extends Component{
                 <InputLabel id="cliente-label">Cliente</InputLabel>
                 <Select
                   required
+                  disabled
                   labelId="cliente"
                   id="cliente"
                   value={this.state.cliente}
@@ -122,11 +103,8 @@ export default class EditProject extends Component{
                   )}
                 </Select>
               </Grid>
-              <Grid item justify="flex-end" container xs={12}>
-                <Button size="small" variant="contained" onClick={this.saveProject}>Salvar</Button>
-              </Grid>
           </Grid>
-        </Context>
+        </Container>
     );
   }
 }

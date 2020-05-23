@@ -34,7 +34,6 @@ export default class ModelForm extends Component{
     await api.get(`/modelo/${id}`).then(response => {
         const { topico, descricao, json } = response.data.find(item => item.idmodelo.toString() === id);
         const contentState = stateFromHTML(json);
-        console.log(contentState)
         this.setState({ topico, descricao, isLoading: false });
     }).catch(error => {
         swal("Ocorreu um erro!", "Tente novamente.", "error")

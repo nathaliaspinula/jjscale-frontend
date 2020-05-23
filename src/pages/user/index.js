@@ -21,14 +21,19 @@ import {cpf as cpfLib} from 'cpf-cnpj-validator';
 import api from '../../services/api';
 import {Link} from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import swal from 'sweetalert';
+import ViewUser from './viewUser';
+import Modal from '@material-ui/core/Modal';
 import './styles.css';
 
 export default class Users extends Component {
 
     state = {
         users: [],
-        isLoading: true
+        isLoading: true,
+        id: '',
+        open: false,
     }
     
     componentDidMount() {
@@ -45,6 +50,15 @@ export default class Users extends Component {
                 this.setState({ isLoading: false })
             );
         });
+    }
+
+    handleOpen = () => {
+        this.setState({open: true});
+    };
+
+    viewUser = (id) => {
+        this.setState({ id });
+        this.handleOpen();
     }
 
     render() {
@@ -70,6 +84,16 @@ export default class Users extends Component {
         
         return (
             <Context>
+                    <Modal
+                        open={this.state.open}
+                        onClose={(e) => this.setState({open: false, idProjeto: ''})}
+                        onEscapeKeyDown={(e) => this.setState({open: false, idProjeto: ''})}
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        className="modal-view"
+                    >
+                        <ViewUser id={this.state.id}/>
+                    </Modal>
                     <MaterialTable
                         icons={tableIcons}
                         title="Usuários"
@@ -80,6 +104,7 @@ export default class Users extends Component {
                             { title: 'Ação', field: 'id', editable: 'never',
                              render: rowData =>
                                 <React.Fragment>
+                                     <VisibilityIcon onClick={() => this.viewUser(rowData.id)} color="action" fontSize="small"/>
                                     <Link to={`/user/${rowData.id}`}>
                                         <EditIcon color="action" fontSize="small"/>
                                     </Link>

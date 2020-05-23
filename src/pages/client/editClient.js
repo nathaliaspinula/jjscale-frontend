@@ -89,7 +89,6 @@ export default class UserForm extends Component{
       await axios.get(`https://viacep.com.br/ws/${cepDigitado}/json/`).then(response => {
         if(!response.data.error) {
           const {logradouro, complemento, bairro, localidade, uf} = response.data;
-          console.log()
           this.setState({
             rua: logradouro ? logradouro : '',
             complemento: complemento ? complemento : '',

@@ -21,12 +21,17 @@ import api from '../../services/api';
 import {Link} from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import swal from 'sweetalert';
+import ViewProduct from './viewProject';
+import Modal from '@material-ui/core/Modal';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 export default class Project extends Component {
 
     state = {
         projects: [],
-        isLoading: true
+        idProjeto: '',
+        isLoading: true,
+        open: false
     }
     
     componentDidMount() {
@@ -44,7 +49,16 @@ export default class Project extends Component {
             );
         });
     }
+    
+    handleOpen = () => {
+        this.setState({open: true});
+    };
 
+    viewClient = (idcliente) => {
+        this.setState({ idProjeto: idcliente });
+        this.handleOpen();
+    }
+    
     render() {
         const tableIcons = {
             Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -68,6 +82,16 @@ export default class Project extends Component {
         
         return (
             <Context >
+                    <Modal
+                        open={this.state.open}
+                        onClose={(e) => this.setState({open: false, idProjeto: ''})}
+                        onEscapeKeyDown={(e) => this.setState({open: false, idProjeto: ''})}
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        className="modal-view"
+                    >
+                        <ViewProduct id={this.state.idProjeto}/>
+                    </Modal>
                     <MaterialTable
                         icons={tableIcons}
                         title="Projetos"
@@ -78,6 +102,7 @@ export default class Project extends Component {
                             { title: 'Ação', field: 'id', editable: 'never',
                              render: rowData => 
                             <React.Fragment>
+                                <VisibilityIcon onClick={() => this.viewClient(rowData.idprojeto)} color="action" fontSize="small"/>
                                 <Link to={`/project/${rowData.idprojeto}`}>
                                     <EditIcon color="action" fontSize="small"/>
                                 </Link>

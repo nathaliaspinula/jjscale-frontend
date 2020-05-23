@@ -21,10 +21,10 @@ import AppsIcon from '@material-ui/icons/Apps';
 import { Link } from 'react-router-dom';
 import { mainListItems } from './listItems';
 
-function Copyright() {
+function Footer() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {'MIT - '}
       <Link color="inherit" to="">
         Scale
       </Link>{' '}
@@ -204,7 +204,7 @@ export default function Context(props) {
           }
           
           <Box pt={4}>
-            <Copyright />
+            <Footer />
           </Box>
         </Container>
       </main>

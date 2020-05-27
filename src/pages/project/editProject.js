@@ -58,12 +58,14 @@ export default class EditProject extends Component{
 
   saveProject = async (e) => {
     const { id, nome, apelido, cliente } = this.state;
+    const user = JSON.parse(localStorage.getItem('user'));
     if(id && nome && apelido && cliente) {
       api.put('/projeto', {
         idprojeto: id,
         nome,
         apelido,
-        idcliente: cliente
+        idcliente: cliente,
+        idusuario: user.id
       }).then(response =>
         swal("Sucesso!", "Projeto alterado.", "success").then(
           this.props.history.push("/project")

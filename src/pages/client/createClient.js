@@ -80,6 +80,7 @@ export default class UserForm extends Component{
 
   saveCliente = async (e) => {
     const cnpjValue = cnpj.strip(this.state.cnpj);
+    const { id } = JSON.parse(localStorage.getItem('user'));
     const {
       razaosocial,
       rua,
@@ -89,7 +90,7 @@ export default class UserForm extends Component{
       bairro,
       cidade,
       uf,
-      pais
+      pais,
     } = this.state;
     if (cnpjValue && !this.state.cnpjValidator) {
           api.post('/cliente', {
@@ -102,7 +103,8 @@ export default class UserForm extends Component{
             bairro,
             cidade,
             uf,
-            pais
+            pais,
+            idusuario: id,
           }).then(response => 
             swal("Sucesso!", "Cliente criado.", "success").then(
               this.props.history.push("/client")

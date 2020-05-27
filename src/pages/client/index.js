@@ -62,6 +62,39 @@ export default class Client extends Component {
         this.handleOpen();
     }
 
+    deleteClient = (idcliente) => {
+        swal({
+            title: "Você deseja excluir este registro?",
+            text: "A exclusão deste registro pode apagar outros registros que o contém, como propostas e projetos.",
+            icon: "warning",
+            buttons: {
+                cancel: "Cancelar",
+                confirm: "Excluir"
+            },
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                const { id } = JSON.parse(localStorage.getItem('user'));
+                api.delete('/cliente', {
+                    data:{
+                        id: idcliente,
+                        idusuario: id
+                    }
+                }).then(response => {
+                    swal("Cliente excluído com sucesso.", {
+                        icon: "success",
+                    });
+                    this.loadUsers()
+                }).catch(error => {
+                    swal("Ocorreu um erro!", "Tente novamente.", "error").then(
+                        this.setState({ isLoading: false })
+                    );
+                });
+            }
+          });
+    }
+
     render() {
         
         const tableIcons = {
@@ -105,13 +138,24 @@ export default class Client extends Component {
                             { title: 'Ação', field: 'idcliente', editable: 'never',
                              render: rowData =>
                                 <React.Fragment>
-                                    <VisibilityIcon onClick={() => this.viewClient(rowData.idcliente)} color="action" fontSize="small"/>
-                                    <Link to={`/client/${rowData.idcliente}`}>
-                                        <EditIcon color="action" fontSize="small"/>
+                                    <VisibilityIcon
+                                        onClick={() => this.viewClient(rowData.idcliente)}
+                                        color="action"
+                                        fontSize="small"
+                                    />
+                                    <Link
+                                        to={`/client/${rowData.idcliente}`}
+                                    >
+                                        <EditIcon 
+                                            color="action" 
+                                            fontSize="small"
+                                        />
                                     </Link>
-                                    <Link to={`/client/${rowData.idcliente}`}>
-                                        <DeleteIcon color="action" fontSize="small"/>
-                                    </Link>
+                                    <DeleteIcon
+                                        onClick={() => this.deleteClient(rowData.idcliente)}
+                                        color="action" 
+                                        fontSize="small"
+                                    />
                                 </React.Fragment>
                             }
                         ]}

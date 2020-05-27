@@ -8,6 +8,7 @@ import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import Clear from '@material-ui/icons/Clear';
 import DeleteOutline from '@material-ui/icons/DeleteOutline';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
 import FilterList from '@material-ui/icons/FilterList';
 import FirstPage from '@material-ui/icons/FirstPage';
@@ -16,80 +17,48 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-import Modal from '@material-ui/core/Modal'
+import {cpf as cpfLib} from 'cpf-cnpj-validator';
 import api from '../../services/api';
 import {Link} from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
-import swal from 'sweetalert';
-import ViewProduct from './viewProduct';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import DeleteIcon from '@material-ui/icons/Delete';
+import swal from 'sweetalert';
+import ViewUser from './viewUser';
+import Modal from '@material-ui/core/Modal';
+import './styles.css';
 
-export default class Products extends Component {
+export default class Users extends Component {
 
     state = {
-        products: [],
-        idProduto: '',
+        users: [],
         isLoading: true,
-        open: false
+        id: '',
+        open: false,
     }
     
     componentDidMount() {
-        this.loadProducts();
+        this.loadUsers();
     }
-
-    handleOpen = () => {
-        this.setState({open: true});
-    };
-   
-    loadProducts = async () =>
+    
+    loadUsers = async () =>
     {
-        await api.get('/produto').then(response => {
-            const products = response.data;
-            this.setState({ products, isLoading: false });
+        await api.get('/proposta').then(response => {
+            const users = response.data.map(item => ({...item, cpf: cpfLib.format(item.cpf) }))
+            this.setState({ users: users, isLoading: false });
         }).catch(error => {
             swal("Ocorreu um erro!", "Tente novamente.", "error").then(
                 this.setState({ isLoading: false })
             );
         });
     }
-    
-    viewProduct = (idproduto) => {
-        this.setState({ idProduto: idproduto });
-        this.handleOpen();
-    }
 
-    deleteProduct = (idproduto) => {
-        swal({
-            title: "Você deseja excluir este registro?",
-            text: "Após a exclusão não será possível recuperá-lo.",
-            icon: "warning",
-            buttons: {
-                cancel: "Cancelar",
-                confirm: "Excluir"
-            },
-            dangerMode: true,
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-                const { id } = JSON.parse(localStorage.getItem('user'));
-                api.delete('/produto', {
-                    data:{
-                        id: idproduto,
-                        idusuario: id
-                    }
-                }).then(response => {
-                    swal("Produto excluído com sucesso.", {
-                        icon: "success",
-                    });
-                    this.loadProducts()
-                }).catch(error => {
-                    swal("Ocorreu um erro!", "Tente novamente.", "error").then(
-                        this.setState({ isLoading: false })
-                    );
-                });
-            }
-          });
+    handleOpen = () => {
+        this.setState({open: true});
+    };
+
+    viewUser = (id) => {
+        this.setState({ id });
+        this.handleOpen();
     }
 
     render() {
@@ -114,47 +83,46 @@ export default class Products extends Component {
         };
         
         return (
-            <Context >
+            <Context>
                     <Modal
                         open={this.state.open}
-                        onClose={(e) => this.setState({open: false, idProduto: ''})}
-                        onEscapeKeyDown={(e) => this.setState({open: false, idProduto: ''})}
+                        onClose={(e) => this.setState({open: false, idProjeto: ''})}
+                        onEscapeKeyDown={(e) => this.setState({open: false, idProjeto: ''})}
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
                         className="modal-view"
                     >
-                        <ViewProduct id={this.state.idProduto}/>
+                        <ViewUser id={this.state.id}/>
                     </Modal>
                     <MaterialTable
                         icons={tableIcons}
-                        title="Produtos"
+                        title="Usuários"
                         columns={[
-                            { title: 'Título', field: 'titulo' },
-                            { title: 'Descrição', field: 'descricao' },
-                            { title: 'Requisito', field: 'requisito' },
+                            { title: 'Nome', field: 'name' },
+                            { title: 'Email', field: 'email' },
+                            { title: 'CPF', field: 'cpf' },
                             { title: 'Ação', field: 'id', editable: 'never',
                              render: rowData =>
-                                <div>
-                                    <VisibilityIcon onClick={() => this.viewProduct(rowData.idproduto)} color="action" fontSize="small"/>
-                                    <Link to={`/product/${rowData.idproduto}`}>
+                                <React.Fragment>
+                                     <VisibilityIcon onClick={() => this.viewUser(rowData.id)} color="action" fontSize="small"/>
+                                    <Link to={`/user/${rowData.id}`}>
                                         <EditIcon color="action" fontSize="small"/>
                                     </Link>
-                                    <DeleteIcon
-                                        onClick={() => this.deleteProduct(rowData.idproduto)}
-                                        color="action"
-                                        fontSize="small"/>
-                                </div>
+                                    <Link to={`/user/${rowData.id}`}>
+                                        <DeleteIcon color="action" fontSize="small"/>
+                                    </Link>
+                                </React.Fragment>
                             }
                         ]}
                         data={
-                            this.state.products
+                            this.state.users
                         }
                         components={{
                             Toolbar: props => (
                                 <div>
                                     <MTableToolbar {...props}/>
                                     <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '10px' }}>
-                                        <Link to="/product/new" className="button">Novo Produto</Link>
+                                        <Link to="/user/new" className="button">Novo Usuário</Link>
                                     </div>
                                 </div>
                             )

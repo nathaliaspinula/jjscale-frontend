@@ -21,13 +21,14 @@ export default class Product extends Component{
 
   loadProduct = async () => {
     const { id } = this.props.match.params;
+
     await api.get(`/produto/${id}`).then(response => {
-      const {idproduto, descricao, requisito, titulo} = response.data.find(produto => produto.idproduto === id);
+      const {idproduto, descricao, requisito, titulo} = response.data.find(produto => produto.idproduto.toString() === id);
       this.setState({
         id: idproduto,
         descricao,
         requisito,
-        titulo
+        titulo,
        });
     }).catch(error => {
         swal("Ocorreu um erro!", "Tente novamente.", "error").then(
@@ -38,11 +39,14 @@ export default class Product extends Component{
 
   saveProduct = async (e) => {
     const { titulo, descricao, requisito } = this.state;
+    const { id } = JSON.parse(localStorage.getItem('user'));
     if (descricao && titulo) {
-      api.post('/produto', {
+      api.put('/produto', {
+        idproduto: this.state.id,
         descricao,
         requisito,
-        titulo
+        titulo,
+        idusuario: id
       }).then(response => 
         swal("Sucesso!", "Produto editado.", "success").then(
           this.props.history.push("/product")

@@ -119,6 +119,7 @@ export default class UserForm extends Component{
 
   saveCliente = async (e) => {
     const cnpjValue = cnpj.strip(this.state.cnpj);
+    const { id } = JSON.parse(localStorage.getItem('user'));
     const { 
       idcliente,
       razaosocial,
@@ -155,7 +156,8 @@ export default class UserForm extends Component{
             bairro,
             cidade,
             uf,
-            pais
+            pais,
+            idusuario: id
           }).then(response => 
             swal("Sucesso!", "Cliente atualizado.", "success").then(
               this.props.history.push("/client")

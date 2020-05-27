@@ -58,6 +58,39 @@ export default class Project extends Component {
         this.setState({ idProjeto: idcliente });
         this.handleOpen();
     }
+
+    deleteProject = (idprojeto) => {
+        swal({
+            title: "Você deseja excluir este projeto?",
+            text: "Após a exclusão não será possível recuperá-lo.",
+            icon: "warning",
+            buttons: {
+                cancel: "Cancelar",
+                confirm: "Excluir"
+            },
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                const { id } = JSON.parse(localStorage.getItem('user'));
+                api.delete('/projeto', {
+                    data:{
+                        id: idprojeto,
+                        idusuario: id
+                    }
+                }).then(response => {
+                    swal("Projeto excluído com sucesso.", {
+                        icon: "success",
+                    });
+                    this.loadProducts()
+                }).catch(error => {
+                    swal("Ocorreu um erro!", "Tente novamente.", "error").then(
+                        this.setState({ isLoading: false })
+                    );
+                });
+            }
+          });
+    }
     
     render() {
         const tableIcons = {
@@ -106,9 +139,11 @@ export default class Project extends Component {
                                 <Link to={`/project/${rowData.idprojeto}`}>
                                     <EditIcon color="action" fontSize="small"/>
                                 </Link>
-                                <Link to={`/project/${rowData.idprojeto}`}>
-                                    <DeleteIcon color="action" fontSize="small"/>
-                                </Link>
+                                <DeleteIcon
+                                    onClick={() => this.deleteProject(rowData.idprojeto)}
+                                    color="action"
+                                    fontSize="small"/>
+                                
                             </React.Fragment>
                             }
                         ]}

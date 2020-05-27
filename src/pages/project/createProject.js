@@ -34,11 +34,13 @@ export default class UserForm extends Component{
 
   saveProject = async (e) => {
     const { nome, apelido, cliente } = this.state;
+    const { id } = JSON.parse(localStorage.getItem('user'));
     if(nome && cliente) {
       api.post('/projeto', {
         nome,
         apelido,
-        idcliente: cliente
+        idcliente: cliente,
+        idusuario: id,
       }).then(response => 
         swal("Sucesso!", "Projeto criado.", "success").then(
           this.props.history.push("/project")

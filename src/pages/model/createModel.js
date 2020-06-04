@@ -17,7 +17,7 @@ export default class ModelForm extends Component{
       super(props);
       this.state = {
         produtos: [],
-        produto: '',
+        idproduto: '',
         editor: '',
         topico: '',
         descricao: '',
@@ -30,11 +30,13 @@ export default class ModelForm extends Component{
 
   saveModel = async () => {
       const { topico, descricao, editor } = this.state;
+      const { id } = JSON.parse(localStorage.getItem('user'));
       if (editor && topico) {
             api.post('/modelo', { 
               topico,
               descricao,
-              json: editor
+              json: editor,
+              id
             }).then(response => 
               swal("Sucesso!", "Modelo criado.", "success").then(
                 this.props.history.push("/model")
@@ -55,15 +57,17 @@ export default class ModelForm extends Component{
   }
 
   handleProductChange = async(e) => {
-    const produto = e.target.value;
-    
-    this.setState({ produto });
+    const idproduto = e.target.value;
     
     const { produtos } = this.state;
     
-    const produtoInfo = produtos.find(p => p.idproduto === produto)
+    try {
+      const produtoInfo = produtos.find(p => p.idproduto === idproduto)
     
-    this.setState({ editor: produtoInfo.descricao });
+      this.setState({ produto: produtoInfo.descricao, idproduto });
+    } catch {
+      swal("Ocorreu um erro.", "Tente novamente.", "error");
+    }
   }
 
   render() {
@@ -99,20 +103,24 @@ export default class ModelForm extends Component{
                 required
                 labelId="produto"
                 id="produto"
-                value={this.state.produto}
+                value={this.state.idproduto}
                 onChange={this.handleProductChange}
                 input={<Input />}
                 fullWidth
                 >
                 { produtos && produtos.map(item => 
-                    <MenuItem key={Math.random()} value={item.idproduto}>
-                    {item.titulo}
+                    <MenuItem
+                      key={item.idproduto}
+                      value={item.idproduto}
+                    >
+                      {item.titulo}
                     </MenuItem>
                 )}
               </Select>
             </Grid>
             <Grid item xs={12}>
               <Editor
+                produto={this.state.produto}
                 callback={(evt) => this.setState({
                   editor: evt,
                 })}

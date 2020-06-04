@@ -22,13 +22,12 @@ import EditProduct from './pages/products/editProduct';
 
 import Model from './pages/model';
 import CreateModel from './pages/model/createModel';
-import EditModel from './pages/model/editModel';
 
 import Project from './pages/project';
 import CreateProject from './pages/project/createProject';
 import EditProject from './pages/project/editProject';
 
-
+import Proposal from './pages/proposal';
 
 const Routes = () =>
 (
@@ -47,10 +46,11 @@ const Routes = () =>
         <PrivateRoute exact path="/product/:id" component={EditProduct} />
         <PrivateRoute exact path="/model" component={Model} />
         <PrivateRoute exact path="/model/new" component={CreateModel} />
-        <PrivateRoute exact path="/model/:id" component={EditModel} />
         <PrivateRoute exact path="/project" component={Project} />
         <PrivateRoute exact path="/project/new" component={CreateProject} />
         <PrivateRoute exact path="/project/:id" component={EditProject} />
+        <PrivateRoute exact path="/proposal" component={Proposal} />
+        
     </Switch>
 );
 

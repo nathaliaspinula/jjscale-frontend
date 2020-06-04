@@ -1,6 +1,7 @@
 import React from 'react';
 import {Editor, EditorState, RichUtils, getDefaultKeyBinding} from 'draft-js';
 import {stateToHTML} from 'draft-js-export-html';
+import {stateFromHTML} from 'draft-js-import-html';
 import './css/example.css';
 import './css/draft.css';
 import './css/rich-editor.css';
@@ -9,12 +10,26 @@ const {useState, useRef, useCallback} = React;
 
 function RichEditorExample(props, { callback }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [changed, setChangedState] = useState(false);
   const editor = useRef(null);
 
   const focus = () => {
     if (editor.current) editor.current.focus();
   };
+  
+  const { produto } = props;
 
+  if (produto) {
+    const actualState = stateToHTML(editorState.getCurrentContent());
+    const newState = stateFromHTML(produto);
+
+    if (actualState !== newState && (!changed)) {      
+      const editor = EditorState.createWithContent(newState);
+      setChangedState(true);
+      setEditorState(editor);
+    }
+  }
+  
   const handleKeyCommand = useCallback(
     (command, editorState) => {
       const newState = RichUtils.handleKeyCommand(editorState, command);

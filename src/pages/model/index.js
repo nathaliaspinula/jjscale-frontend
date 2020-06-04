@@ -45,6 +45,38 @@ export default class Model extends Component {
         });
     }
 
+    deleteProject = (idmodelo) => {
+        swal({
+            title: "Você deseja excluir este modelo?",
+            text: "Após a exclusão não será possível recuperá-lo.",
+            icon: "warning",
+            buttons: {
+                cancel: "Cancelar",
+                confirm: "Excluir"
+            },
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                const { id } = JSON.parse(localStorage.getItem('user'));
+                api.delete('/modelo', {
+                    data:{
+                        id: idmodelo,
+                        idusuario: id
+                    }
+                }).then(response => {
+                    swal("Modelo excluído com sucesso.", {
+                        icon: "success",
+                    });
+                    this.loadModels();
+                }).catch(error => {
+                    swal("Ocorreu um erro!", "Tente novamente.", "error").then(
+                        this.setState({ isLoading: false })
+                    );
+                });
+            }
+          });
+    }
     render() {
         const tableIcons = {
             Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -77,10 +109,7 @@ export default class Model extends Component {
                             { title: 'Ação', field: 'idmodelo', editable: 'never',
                              render: rowData =>
                                 <React.Fragment>
-                                    <Link to={`/model/${rowData.idmodelo}`}>
-                                        <EditIcon color="action" fontSize="small"/>
-                                    </Link>
-                                    <Link to={`/model/${rowData.idmodelo}`}>
+                                    <Link onClick={() => this.deleteProject(rowData.idmodelo)}>
                                         <DeleteIcon color="action" fontSize="small"/>
                                     </Link>
                                 </React.Fragment>

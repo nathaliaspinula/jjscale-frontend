@@ -13,6 +13,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography'
+import coverGenerator from '../../components/utils/coverGenerator';
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -92,7 +93,6 @@ export default class Proposal extends Component {
                 const contentState = stateFromHTML(item.json);
                 return {...item, id: `item-${item.idmodelo}`, editorState: EditorState.createWithContent(contentState)}
             })
-            console.log(modelsWithId)
             this.setState({ items : modelsWithId, isLoading: false });
         }).catch(error => {
             swal("Ocorreu um erro!", "Tente novamente.", "error").then(
@@ -145,9 +145,12 @@ export default class Proposal extends Component {
     };
     
     printDocument() {
-        const input = document.getElementById('divToPrint');
+        const divToPrint = document.getElementById('divToPrint');
+        const capa = document.getElementById('capa');
+        const cover = new DOMParser().parseFromString(coverGenerator(), "text/html");
+        capa.appendChild(cover.querySelector('div'));
         const html2pdf = window.html2pdf;
-        html2pdf().from(input).save();
+        html2pdf().from(divToPrint).save();
     }
     
     render() {        
@@ -235,6 +238,8 @@ export default class Proposal extends Component {
                                                     index={index}
                                                     className="draggable-item-print">
                                                     {(provided, snapshot) => (
+                                                    <div>
+                                                        <div id="capa"></div>
                                                         <div
                                                             className="draggable-item-print"
                                                             ref={provided.innerRef}
@@ -255,6 +260,7 @@ export default class Proposal extends Component {
                                                             }
                                                         
                                                         </div>
+                                                    </div>
                                                     )}
                                                 </Draggable>
                                             ))}

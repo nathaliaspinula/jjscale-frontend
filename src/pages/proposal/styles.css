@@ -1,0 +1,35 @@
+.dnd-space {
+    display: flex;
+    flex-wrap: nowrap !important;
+}
+
+.as-paper {
+    width: 210mm !important;
+    min-height: 297mm;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 45px
+}
+
+.box {
+    border: black 1px solid !important;
+}
+
+.items {
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+
+.draggable-item-print {
+    padding: 0px 12px 0px 12px !important;
+}
+
+.container-proposal {
+    flex-wrap: nowrap !important;
+}
+
+.line {
+    margin-top: 44px;
+    margin-bottom: 44px;
+    border: #e6e6e6 1px solid;
+}

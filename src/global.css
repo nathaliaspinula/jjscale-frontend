@@ -78,3 +78,20 @@ label.Mui-focused {
     align-items: center;
     justify-content: center;
 }
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedSizeSmall.MuiButton-sizeSmall {
+    color: white;
+    background-color: #7dd420;
+    width: 90px;
+    padding: 3px;
+    text-transform: none;
+    font-size: 12pt;
+    border-radius: 6px;
+    text-align: center;
+    box-shadow: none;
+    height: 36px;
+}
+
+.public-DraftStyleDefault-ltr {
+    text-align: justify !important;
+}

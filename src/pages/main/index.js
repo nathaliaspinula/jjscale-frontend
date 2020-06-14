@@ -119,6 +119,23 @@ export default class Main extends Component{
                 </Card>
               </Link>
             </Grid>
+            <Grid item sm={3}>
+              <Link to="/dashboard">
+                <Card variant="outlined">
+                  <CardContent className="main-card-content">
+                    <Description
+                      className="main-card-icons" 
+                      style={{ fontSize: 40 }}
+                    />
+                    <Typography
+                      className="main-card-title"
+                    >
+                      Dashboard
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Link>
+            </Grid>
           </Grid>
         </Context>
 

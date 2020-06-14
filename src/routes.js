@@ -31,6 +31,8 @@ import Dashboard from './pages/dashboard';
 import Proposal from './pages/proposal';
 import ProposalCreate from './pages/proposalCreate';
 
+import NotFound from './components/notFound';
+
 const Routes = () =>
 (
     <Switch>
@@ -54,7 +56,7 @@ const Routes = () =>
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/proposal" component={Proposal} />
         <PrivateRoute exact path="/proposal/create" component={ProposalCreate} />
-        
+        <Route path="*" component={NotFound} />
     </Switch>
 );
 

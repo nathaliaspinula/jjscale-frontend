@@ -44,8 +44,9 @@ export default class Products extends Component {
    
     loadProducts = async () =>
     {
-        await api.get('/propostas').then(response => {
+        await api.get('/proposta').then(response => {
             const products = response.data;
+            console.log(products);
             this.setState({ products, isLoading: false });
         }).catch(error => {
             swal("Ocorreu um erro!", "Tente novamente.", "error").then(
@@ -129,12 +130,12 @@ export default class Products extends Component {
                         icons={tableIcons}
                         title="Propostas"
                         columns={[
-                            { title: 'Título', field: 'titulo' },
+                            { title: 'Título', field: 'observacao' },
                             { title: 'Ação', field: 'id', editable: 'never',
                              render: rowData =>
                                 <div>
                                     <VisibilityIcon onClick={() => this.viewProduct(rowData.idproduto)} color="action" fontSize="small"/>
-                                    <Link to={`/product/${rowData.idproduto}`}>
+                                    <Link to={`/proposal/${rowData.idproposta}`}>
                                         <EditIcon color="action" fontSize="small"/>
                                     </Link>
                                     <DeleteIcon
@@ -152,7 +153,7 @@ export default class Products extends Component {
                                 <div>
                                     <MTableToolbar {...props}/>
                                     <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '10px' }}>
-                                        <Link to="/product/new" className="button">Novo Produto</Link>
+                                        <Link to="/proposal/register" className="button">Registrar Proposta</Link>
                                     </div>
                                 </div>
                             )

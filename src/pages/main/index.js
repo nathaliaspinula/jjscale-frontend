@@ -18,124 +18,141 @@ export default class Main extends Component{
         <Context>
           <Grid container spacing={4} justify="space-around" className="main-responsive">
               <Grid item sm={3}>
-              <Link to="/client">
-                <Card variant="outlined">
-                  <CardContent className="main-card-content">
-                    <Group
-                      className="main-card-icons" 
-                      style={{ fontSize: 40 }}
-                    />
-                    <Typography
-                      className="main-card-title"
-                    >
-                      Clientes
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Link>
-            </Grid>
-            <Grid item sm={3}>
-              <Link to="/user">
-                <Card variant="outlined">
-                  <CardContent className="main-card-content">
-                    <Person
-                      className="main-card-icons" 
-                      style={{ fontSize: 40 }}
-                    />
-                    <Typography
-                      className="main-card-title"
-                    >
-                      Usuários
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Link>
-            </Grid>
-            <Grid item sm={3}>
-              <Link to="/product">
+                <Link to="/client">
                   <Card variant="outlined">
                     <CardContent className="main-card-content">
-                      <LocalShippingIcon
+                      <Group
                         className="main-card-icons" 
                         style={{ fontSize: 40 }}
                       />
                       <Typography
                         className="main-card-title"
                       >
-                        Produtos
+                        Clientes
                       </Typography>
                     </CardContent>
                   </Card>
-              </Link>
-            </Grid>
-            <Grid item sm={3}>
-              <Link to="/project">
-                <Card variant="outlined">
-                  <CardContent className="main-card-content">
-                    <Folder
-                      className="main-card-icons" 
-                      style={{ fontSize: 40 }}
-                    />
-                    <Typography
-                      className="main-card-title"
-                    >
-                      Projetos
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Link>
-            </Grid>
-            <Grid item sm={3}>
-              <Link to="/model">
-                <Card variant="outlined">
-                  <CardContent className="main-card-content">
-                    <Description
-                      className="main-card-icons" 
-                      style={{ fontSize: 40 }}
-                    />
-                    <Typography
-                      className="main-card-title"
-                    >
-                      Modelos
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Link>
-            </Grid>
-            <Grid item sm={3}>
-              <Link to="/proposal">
-                <Card variant="outlined">
-                  <CardContent className="main-card-content">
-                    <Description
-                      className="main-card-icons" 
-                      style={{ fontSize: 40 }}
-                    />
-                    <Typography
-                      className="main-card-title"
-                    >
-                      Propostas
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Link>
-            </Grid>
-            <Grid item sm={3}>
-              <Link to="/proposal/create">
-                <Card variant="outlined">
-                  <CardContent className="main-card-content">
-                    <Description
-                      className="main-card-icons" 
-                      style={{ fontSize: 40 }}
-                    />
-                    <Typography
-                      className="main-card-title"
-                    >
-                      Emitir Propostas
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Link>
-            </Grid>
+                </Link>
+              </Grid>
+              <Grid item sm={3}>
+                <Link to="/user">
+                  <Card variant="outlined">
+                    <CardContent className="main-card-content">
+                      <Person
+                        className="main-card-icons" 
+                        style={{ fontSize: 40 }}
+                      />
+                      <Typography
+                        className="main-card-title"
+                      >
+                        Usuários
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </Grid>
+              <Grid item sm={3}>
+                <Link to="/product">
+                    <Card variant="outlined">
+                      <CardContent className="main-card-content">
+                        <LocalShippingIcon
+                          className="main-card-icons" 
+                          style={{ fontSize: 40 }}
+                        />
+                        <Typography
+                          className="main-card-title"
+                        >
+                          Produtos
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                </Link>
+              </Grid>
+              <Grid item sm={3}>
+                <Link to="/project">
+                  <Card variant="outlined">
+                    <CardContent className="main-card-content">
+                      <Folder
+                        className="main-card-icons" 
+                        style={{ fontSize: 40 }}
+                      />
+                      <Typography
+                        className="main-card-title"
+                      >
+                        Projetos
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </Grid>
+              <Grid item sm={3}>
+                <Link to="/model">
+                  <Card variant="outlined">
+                    <CardContent className="main-card-content">
+                      <Description
+                        className="main-card-icons" 
+                        style={{ fontSize: 40 }}
+                      />
+                      <Typography
+                        className="main-card-title"
+                      >
+                        Modelos
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </Grid>
+              <Grid item sm={3}>
+                <Link to="/proposal">
+                  <Card variant="outlined">
+                    <CardContent className="main-card-content">
+                      <Description
+                        className="main-card-icons" 
+                        style={{ fontSize: 40 }}
+                      />
+                      <Typography
+                        className="main-card-title"
+                      >
+                        Propostas
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </Grid>
+              <Grid item sm={3}>
+                <Link to="/proposal/create">
+                  <Card variant="outlined">
+                    <CardContent className="main-card-content">
+                      <Description
+                        className="main-card-icons" 
+                        style={{ fontSize: 40 }}
+                      />
+                      <Typography
+                        className="main-card-title"
+                      >
+                        Emitir Proposta
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </Grid>
+              <Grid item sm={3}>
+                <Link to="/dashboard">
+                  <Card variant="outlined">
+                    <CardContent className="main-card-content">
+                      <Description
+                        className="main-card-icons" 
+                        style={{ fontSize: 40 }}
+                      />
+                      <Typography
+                        className="main-card-title"
+                      >
+                        Dashboard
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </Grid>
           </Grid>
         </Context>
 

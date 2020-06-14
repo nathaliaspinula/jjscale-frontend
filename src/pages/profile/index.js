@@ -50,7 +50,7 @@ export default class UserEditForm extends Component{
                     <span className="nome">
                         { this.state.name }
                     </span>
-                    <Link to={`/model/${this.state.id}`}>
+                    <Link to={`/user/${this.state.id}`}>
                         <EditIcon color="action" fontSize="small"/>
                     </Link>
                 </Typography>

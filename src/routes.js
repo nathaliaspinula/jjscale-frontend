@@ -28,6 +28,7 @@ import CreateProject from './pages/project/createProject';
 import EditProject from './pages/project/editProject';
 
 import Proposal from './pages/proposal';
+import ProposalCreate from './pages/proposalCreate';
 
 const Routes = () =>
 (
@@ -50,6 +51,7 @@ const Routes = () =>
         <PrivateRoute exact path="/project/new" component={CreateProject} />
         <PrivateRoute exact path="/project/:id" component={EditProject} />
         <PrivateRoute exact path="/proposal" component={Proposal} />
+        <PrivateRoute exact path="/proposal/create" component={ProposalCreate} />
         
     </Switch>
 );

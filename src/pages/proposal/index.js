@@ -25,7 +25,7 @@ import ViewProduct from './viewProposal';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-export default class Products extends Component {
+export default class Proposal extends Component {
 
     state = {
         products: [],
@@ -128,20 +128,18 @@ export default class Products extends Component {
                     </Modal>
                     <MaterialTable
                         icons={tableIcons}
-                        title="Propostas"
+                        title="Histórico de Propostas"
                         columns={[
-                            { title: 'Título', field: 'observacao' },
+                            { title: 'Projeto', field: 'nome' },
+                            { title: 'Criador', field: 'usuario' },
+                            { title: 'Data de Criação', field: 'log_data', type: 'date' },
                             { title: 'Ação', field: 'id', editable: 'never',
                              render: rowData =>
                                 <div>
-                                    <VisibilityIcon onClick={() => this.viewProduct(rowData.idproduto)} color="action" fontSize="small"/>
+                                    <VisibilityIcon onClick={() => this.viewProduct(rowData.idproposta)} color="action" fontSize="small"/>
                                     <Link to={`/proposal/${rowData.idproposta}`}>
                                         <EditIcon color="action" fontSize="small"/>
                                     </Link>
-                                    <DeleteIcon
-                                        onClick={() => this.deleteProduct(rowData.idproduto)}
-                                        color="action"
-                                        fontSize="small"/>
                                 </div>
                             }
                         ]}

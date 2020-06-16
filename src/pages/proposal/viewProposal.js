@@ -7,26 +7,27 @@ import Container from '@material-ui/core/Container';
 import api from '../../services/api';
 import swal from 'sweetalert';
 
-export default class Product extends Component{
+export default class ViewProposal extends Component{
   state = {
-    requisito: '',
-    descricao: '',
-    titulo: ''
+    observacao: '',
+    log_data: '',
+    nome: '',
+    usuario: '',
   }
 
   componentDidMount() {
-    this.loadProduct();
+    this.loadProposal();
   }
 
-  loadProduct = async () => {
+  loadProposal = async () => {
     const id = this.props.id;
-    await api.get(`/produto/${id}`).then(response => {
-     const {idproduto, descricao, requisito, titulo} = response.data.find(produto => produto.idproduto === id);
+    await api.get(`/proposta/${id}`).then(response => {
+     const { usuario, observacao, log_data, nome } = response.data.find(produto => produto.idproposta === id);
      this.setState({
-       id: idproduto,
-       descricao,
-       requisito,
-       titulo
+        usuario,
+        observacao: observacao || '',
+        log_data,
+        nome
       });
     }).catch(error => {
         swal("Ocorreu um erro!", "Tente novamente.", "error").then(
@@ -39,39 +40,50 @@ export default class Product extends Component{
     return (
         <Container maxWidth="sm" className="paper-view">
               <Typography variant="h6" gutterBottom>
-                  Visualizar Produto
+                  Visualizar Proposta
               </Typography>
               <Grid container spacing={3}>
-                  <Grid item xs={12}>
+                  <Grid item sm={12}>
                      <TextField
-                        name="titulo"
-                        label="Título"
+                        name="projeto"
+                        label="Projeto"
                         fullWidth
                         disabled
-                        value={this.state.titulo}
-                        onChange={(e) => this.setState({titulo: e.target.value})}
+                        value={this.state.nome}
+                        onChange={(e) => this.setState({nome: e.target.value})}
                       />
                   </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <div style={{marginBottom: '10px'}}>
-                      <label>Descrição</label>
-                    </div>
-                    <TextareaAutosize
-                        disabled
-                      rowsMax={4}
-                      value={this.state.descricao}
-                      onChange={(e) => this.setState({descricao: e.target.value})}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
+                  <Grid item sm={12}>
                      <TextField
-                        name="requisito"
-                        label="Requisitos"
+                        name="dataCriacao"
+                        label="Data Criação"
                         disabled
+                        type="date"
                         fullWidth
-                        value={this.state.requisito}
+                        value={this.state.log_data}
                         onChange={(e) => this.setState({requisito: e.target.value})}
                       />
+                  </Grid>
+                  <Grid item sm={12}>
+                     <TextField
+                        name="criador"
+                        label="Criador"
+                        disabled
+                        fullWidth
+                        value={this.state.usuario}
+                        onChange={(e) => this.setState({requisito: e.target.value})}
+                      />
+                  </Grid>
+                  <Grid item sm={12}>
+                    <div style={{marginBottom: '10px'}}>
+                      <label>Observação</label>
+                    </div>
+                    <TextareaAutosize
+                      disabled
+                      rowsMax={4}
+                      value={this.state.observacao}
+                      onChange={(e) => this.setState({observacao: e.target.value})}
+                    />
                   </Grid>
               </Grid>
         </Container>

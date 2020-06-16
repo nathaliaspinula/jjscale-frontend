@@ -7,14 +7,13 @@
     box-sizing: border-box;
 }
 
-body {
+body, textarea {
     font: 400 14px Roboto, sans-serif;
     background:#f0f0f5;
     -webkit-font-smoothing: antialiased;
-
 }
 
-input, button, textarea {
+input, button {
     font: 400 18px Roboto, sans-serif;
 }
 

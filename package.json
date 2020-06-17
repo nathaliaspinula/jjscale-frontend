@@ -17,6 +17,7 @@
     "draft-js-import-html": "^1.4.1",
     "history": "^4.10.1",
     "material-table": "^1.57.2",
+    "moment": "^2.26.0",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-chartjs-2": "^2.9.0",

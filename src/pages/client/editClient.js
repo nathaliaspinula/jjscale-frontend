@@ -140,7 +140,6 @@ export default class UserForm extends Component{
       rua &&
       numero &&
       cep &&
-      complemento &&
       bairro &&
       cidade &&
       uf &&

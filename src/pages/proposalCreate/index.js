@@ -152,21 +152,40 @@ export default class Proposal extends Component {
     render() {
         const printDocument = () => {
             const projeto = this.state.projeto;
+            
             const titulo = this.state.titulo;
+            
             const projetoSelecionado = this.state.projetos.find(item => item.idprojeto === projeto)
+            
             if (projetoSelecionado) {
-                const divToPrint = document.getElementById('divToPrint');
+                try {
+                    const { name, id } = JSON.parse(localStorage.getItem('user'));
+                    
+                    const divToPrint = document.getElementById('divToPrint');
                 
-                const capa = document.getElementById('capa');
-                
-                const cover = new DOMParser().parseFromString(coverGenerator(titulo, projetoSelecionado), "text/html");
-                
-                capa.appendChild(cover.querySelector('div'));
- 
-                const html2pdf = window.html2pdf;
-                
-                html2pdf().from(divToPrint).save();
-                
+                    const capa = document.getElementById('capa');
+                    
+                    const cover = new DOMParser().parseFromString(coverGenerator(titulo, projetoSelecionado, name), "text/html");
+                    
+                    capa.appendChild(cover.querySelector('div'));
+     
+                    const html2pdf = window.html2pdf;
+                   
+                    html2pdf().from(divToPrint).save();
+
+                    api.post('/proposta', {
+                        idprojeto: projeto,
+                        idusuario: id,
+                        observacao: 'Proposta gerada através do sistema'
+                    }).then(response => 
+                        swal("Sucesso!", "Proposta registrada.", "success").then(
+                            this.props.history.push("/proposal/")
+                        )
+                    ).catch(error => swal("Ocorreu um erro!", "Ocorreu um erro ao registrar a proposta.", "error"));
+
+                } catch {
+                    swal("Ocorreu um erro!", "Ocorreu um erro ao gerar a proposta.", "error");
+                }                
             } else {
                 swal("Ocorreu um erro!", "É necessário escolher um projeto.", "error");
             }

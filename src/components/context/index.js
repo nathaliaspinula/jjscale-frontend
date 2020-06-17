@@ -153,9 +153,13 @@ export default function Context(props) {
           >
             <MenuIcon />
           </IconButton>
+          
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Scale
+            <Link className={classes.link} to="/home">
+              Scale
+            </Link>
           </Typography>
+          
           <Link className={classes.link} to="/home">
             <IconButton color="inherit">
               <AppsIcon />

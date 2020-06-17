@@ -74,15 +74,15 @@ export default class Project extends Component {
             if (willDelete) {
                 const { id } = JSON.parse(localStorage.getItem('user'));
                 api.delete('/projeto', {
-                    data:{
-                        id: idprojeto,
+                    data: {
+                        id: idprojeto, 
                         idusuario: id
                     }
                 }).then(response => {
                     swal("Projeto excluído com sucesso.", {
                         icon: "success",
                     });
-                    this.loadProducts()
+                    this.loadProjects()
                 }).catch(error => {
                     swal("Ocorreu um erro!", "Tente novamente.", "error").then(
                         this.setState({ isLoading: false })

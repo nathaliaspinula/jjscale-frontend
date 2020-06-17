@@ -63,7 +63,7 @@ export default class Users extends Component {
     
     deleteUser = (id) => {
         swal({
-            title: "Você deseja excluir este projeto?",
+            title: "Você deseja excluir este usuário?",
             text: "Após a exclusão não será possível recuperá-lo.",
             icon: "warning",
             buttons: {
@@ -76,7 +76,7 @@ export default class Users extends Component {
             if (willDelete) {
                 const { id } = JSON.parse(localStorage.getItem('user'));
                 api.delete('/user', {
-                    data:{
+                    data: {
                         id,
                         idusuario: id
                     }

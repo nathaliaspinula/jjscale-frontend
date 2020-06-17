@@ -13,6 +13,8 @@ export default class ViewProposal extends Component{
     log_data: '',
     nome: '',
     usuario: '',
+    log_data_alteracao: '',
+    log_usuario_editor: ''
   }
 
   componentDidMount() {
@@ -22,12 +24,15 @@ export default class ViewProposal extends Component{
   loadProposal = async () => {
     const id = this.props.id;
     await api.get(`/proposta/${id}`).then(response => {
-     const { usuario, observacao, log_data, nome } = response.data.find(produto => produto.idproposta === id);
+      console.log(response);
+     const { usuario, observacao, log_data, nome, log_usuario_editor, log_data_alteracao} = response.data.find(produto => produto.idproposta === id);
      this.setState({
         usuario,
         observacao: observacao || '',
         log_data,
-        nome
+        nome,
+        log_usuario_editor: log_usuario_editor || usuario,
+        log_data_alteracao: log_data_alteracao || log_data,
       });
     }).catch(error => {
         swal("Ocorreu um erro!", "Tente novamente.", "error").then(
@@ -50,7 +55,6 @@ export default class ViewProposal extends Component{
                         fullWidth
                         disabled
                         value={this.state.nome}
-                        onChange={(e) => this.setState({nome: e.target.value})}
                       />
                   </Grid>
                   <Grid item sm={12}>
@@ -61,7 +65,6 @@ export default class ViewProposal extends Component{
                         type="date"
                         fullWidth
                         value={this.state.log_data}
-                        onChange={(e) => this.setState({requisito: e.target.value})}
                       />
                   </Grid>
                   <Grid item sm={12}>
@@ -71,7 +74,25 @@ export default class ViewProposal extends Component{
                         disabled
                         fullWidth
                         value={this.state.usuario}
-                        onChange={(e) => this.setState({requisito: e.target.value})}
+                      />
+                  </Grid>
+                  <Grid item sm={12}>
+                     <TextField
+                        name="editor"
+                        label="Última Edição Por"
+                        disabled
+                        fullWidth
+                        value={this.state.log_usuario_editor}
+                      />
+                  </Grid>
+                  <Grid item sm={12}>
+                     <TextField
+                        name="dataalteracao"
+                        type="date"
+                        label="Data Última Alteração"
+                        disabled
+                        fullWidth
+                        value={this.state.log_data_alteracao}
                       />
                   </Grid>
                   <Grid item sm={12}>
@@ -82,7 +103,6 @@ export default class ViewProposal extends Component{
                       disabled
                       rowsMax={4}
                       value={this.state.observacao}
-                      onChange={(e) => this.setState({observacao: e.target.value})}
                     />
                   </Grid>
               </Grid>

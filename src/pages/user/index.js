@@ -60,7 +60,39 @@ export default class Users extends Component {
         this.setState({ id });
         this.handleOpen();
     }
-
+    
+    deleteUser = (id) => {
+        swal({
+            title: "Você deseja excluir este projeto?",
+            text: "Após a exclusão não será possível recuperá-lo.",
+            icon: "warning",
+            buttons: {
+                cancel: "Cancelar",
+                confirm: "Excluir"
+            },
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                const { id } = JSON.parse(localStorage.getItem('user'));
+                api.delete('/user', {
+                    data:{
+                        id,
+                        idusuario: id
+                    }
+                }).then(response => {
+                    swal("Usuário excluído com sucesso.", {
+                        icon: "success",
+                    });
+                    this.loadProducts()
+                }).catch(error => {
+                    swal("Ocorreu um erro!", "Tente novamente.", "error").then(
+                        this.setState({ isLoading: false })
+                    );
+                });
+            }
+          });
+    }
     render() {
         const tableIcons = {
             Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -108,9 +140,7 @@ export default class Users extends Component {
                                     <Link to={`/user/${rowData.id}`}>
                                         <EditIcon color="action" fontSize="small"/>
                                     </Link>
-                                    <Link to={`/user/${rowData.id}`}>
-                                        <DeleteIcon color="action" fontSize="small"/>
-                                    </Link>
+                                    <DeleteIcon color="action" fontSize="small" onClick={() => this.deleteUser(rowData.id)}/>
                                 </React.Fragment>
                             }
                         ]}

@@ -59,21 +59,31 @@ export default class Project extends Component {
         return (
             <Context container="true">
                 <Typography
-                      className="main-card-title"
-                      variant="h4"
-                    >
+                    className="main-card-title"
+                    variant="h5"
+                >
                       Dashboard
-                    </Typography>
+                </Typography>
                 <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                    <Grid item sm={6}>
                         <div>
-                            <h2>Proposta gerada por Cliente</h2>
+                        <Typography
+                            className="main-card-title"
+                            variant="h6"
+                        >   
+                            Proposta gerada por Cliente
+                        </Typography>
                             <Pie data={client} />
                         </div>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item sm={6}>
                         <div>
-                            <h2>Proposta gerada por Usuário</h2>
+                            <Typography
+                                className="main-card-title"
+                                variant="h6"
+                            >
+                                Proposta gerada por Usuário
+                            </Typography>
                             <Pie data={user} />
                         </div>
                     </Grid>

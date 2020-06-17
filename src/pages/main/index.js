@@ -9,6 +9,9 @@ import Group from '@material-ui/icons/Group';
 import Description from '@material-ui/icons/Description';
 import Folder from '@material-ui/icons/Folder';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import PieChartIcon from '@material-ui/icons/PieChart';
+import LaunchIcon from '@material-ui/icons/Launch';
+import TextFieldsIcon from '@material-ui/icons/TextFields';
 import { Link } from 'react-router-dom';
 import './styles.css';
 
@@ -89,7 +92,7 @@ export default class Main extends Component{
                 <Link to="/model">
                   <Card variant="outlined">
                     <CardContent className="main-card-content">
-                      <Description
+                      <TextFieldsIcon
                         className="main-card-icons" 
                         style={{ fontSize: 40 }}
                       />
@@ -123,7 +126,7 @@ export default class Main extends Component{
                 <Link to="/proposal/create">
                   <Card variant="outlined">
                     <CardContent className="main-card-content">
-                      <Description
+                      <LaunchIcon
                         className="main-card-icons" 
                         style={{ fontSize: 40 }}
                       />
@@ -140,7 +143,7 @@ export default class Main extends Component{
                 <Link to="/dashboard">
                   <Card variant="outlined">
                     <CardContent className="main-card-content">
-                      <Description
+                      <PieChartIcon
                         className="main-card-icons" 
                         style={{ fontSize: 40 }}
                       />

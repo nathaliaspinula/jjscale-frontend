@@ -28,9 +28,10 @@ import CreateProject from './pages/project/createProject';
 import EditProject from './pages/project/editProject';
 
 import Dashboard from './pages/dashboard';
+
 import Proposal from './pages/proposal';
 import RegisterProposal from './pages/proposal/registerProposal';
-
+import EditProposal from './pages/proposal/editProposal';
 import ProposalCreate from './pages/proposalCreate';
 
 import NotFound from './components/notFound';
@@ -59,6 +60,7 @@ const Routes = () =>
         <PrivateRoute exact path="/proposal" component={Proposal} />
         <PrivateRoute exact path="/proposal/register" component={RegisterProposal} />
         <PrivateRoute exact path="/proposal/create" component={ProposalCreate} />
+        <PrivateRoute exact path="/proposal/:id" component={EditProposal} />
         <Route path="*" component={NotFound} />
     </Switch>
 );

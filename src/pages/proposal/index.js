@@ -23,32 +23,30 @@ import EditIcon from '@material-ui/icons/Edit';
 import swal from 'sweetalert';
 import ViewProduct from './viewProposal';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 export default class Proposal extends Component {
 
     state = {
-        products: [],
+        propostas: [],
         idProduto: '',
         isLoading: true,
         open: false
     }
     
     componentDidMount() {
-        this.loadProducts();
+        this.loadPropostas();
     }
 
     handleOpen = () => {
         this.setState({open: true});
     };
    
-    loadProducts = async () =>
+    loadPropostas = async () =>
     {
         await api.get('/proposta').then(response => {
-            const products = response.data;
-            console.log(products);
-            this.setState({ products, isLoading: false });
-        }).catch(error => {
+            const propostas = response.data;
+            this.setState({ propostas, isLoading: false });
+        }).catch(() => {
             swal("Ocorreu um erro!", "Tente novamente.", "error").then(
                 this.setState({ isLoading: false })
             );
@@ -79,12 +77,12 @@ export default class Proposal extends Component {
                         id: idproduto,
                         idusuario: id
                     }
-                }).then(response => {
+                }).then(() => {
                     swal("Produto excluído com sucesso.", {
                         icon: "success",
                     });
-                    this.loadProducts()
-                }).catch(error => {
+                    this.loadpropostas()
+                }).catch(() => {
                     swal("Ocorreu um erro!", "Tente novamente.", "error").then(
                         this.setState({ isLoading: false })
                     );
@@ -118,8 +116,8 @@ export default class Proposal extends Component {
             <Context >
                     <Modal
                         open={this.state.open}
-                        onClose={(e) => this.setState({open: false, idProduto: ''})}
-                        onEscapeKeyDown={(e) => this.setState({open: false, idProduto: ''})}
+                        onClose={() => this.setState({open: false, idProduto: ''})}
+                        onEscapeKeyDown={() => this.setState({open: false, idProduto: ''})}
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
                         className="modal-view"
@@ -144,7 +142,7 @@ export default class Proposal extends Component {
                             }
                         ]}
                         data={
-                            this.state.products
+                            this.state.propostas
                         }
                         components={{
                             Toolbar: props => (

@@ -34,7 +34,7 @@ export default class UserEditForm extends Component{
                 id,
                 cpf: cpfFormatted,
                 name,
-                email
+                email,
              });
         }).catch(error => {
             swal("Ocorreu um erro!", "Tente novamente.", "error");
@@ -78,13 +78,15 @@ export default class UserEditForm extends Component{
         const email = this.state.email;
         const id = this.state.id;
         const cpfValue = cpfLib.strip(this.state.cpf);
+        const usuario = JSON.parse(localStorage.getItem('user'));
 
         if (name && email && cpfValue && !this.state.cpfValidator && !this.state.emailValidator) {
             api.put('/user', {
                 id: id,
                 name: name,
                 email: email,
-                cpf: cpfValue
+                cpf: cpfValue,
+                idusuario: usuario.id
             }).then(response => 
                 swal("Sucesso!", "Dados atualizados.", "success").then(
                     this.props.history.push("/user")

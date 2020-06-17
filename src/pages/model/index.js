@@ -19,7 +19,6 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import api from '../../services/api';
 import {Link} from 'react-router-dom';
-import EditIcon from '@material-ui/icons/Edit';
 import swal from 'sweetalert';
 
 export default class Model extends Component {
@@ -38,7 +37,7 @@ export default class Model extends Component {
         await api.get('/modelo').then(response => {
             const models = response.data;
             this.setState({ models, isLoading: false });
-        }).catch(error => {
+        }).catch(() => {
             swal("Ocorreu um erro!", "Tente novamente.", "error").then(
                 this.setState({ isLoading: false })
             );
@@ -64,12 +63,12 @@ export default class Model extends Component {
                         id: idmodelo,
                         idusuario: id
                     }
-                }).then(response => {
+                }).then(() => {
                     swal("Modelo excluído com sucesso.", {
                         icon: "success",
                     });
                     this.loadModels();
-                }).catch(error => {
+                }).catch(() => {
                     swal("Ocorreu um erro!", "Tente novamente.", "error").then(
                         this.setState({ isLoading: false })
                     );

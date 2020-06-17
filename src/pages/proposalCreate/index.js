@@ -156,13 +156,17 @@ export default class Proposal extends Component {
             const projetoSelecionado = this.state.projetos.find(item => item.idprojeto === projeto)
             if (projetoSelecionado) {
                 const divToPrint = document.getElementById('divToPrint');
+                
                 const capa = document.getElementById('capa');
+                
                 const cover = new DOMParser().parseFromString(coverGenerator(titulo, projetoSelecionado), "text/html");
                 
                 capa.appendChild(cover.querySelector('div'));
-                console.log(capa);
+ 
                 const html2pdf = window.html2pdf;
+                
                 html2pdf().from(divToPrint).save();
+                
             } else {
                 swal("Ocorreu um erro!", "É necessário escolher um projeto.", "error");
             }

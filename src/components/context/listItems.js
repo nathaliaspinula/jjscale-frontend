@@ -7,6 +7,9 @@ import Person from '@material-ui/icons/Person';
 import Group from '@material-ui/icons/Group';
 import Description from '@material-ui/icons/Description';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import PieChartIcon from '@material-ui/icons/PieChart';
+import LaunchIcon from '@material-ui/icons/Launch';
+import TextFieldsIcon from '@material-ui/icons/TextFields';
 import { Link } from 'react-router-dom';
 import './styles/listItem.css';
 
@@ -49,7 +52,7 @@ export const mainListItems = (
     <Link to='/model' className='link'>
       <ListItem button>
         <ListItemIcon>
-          <Description />
+          <TextFieldsIcon />
         </ListItemIcon>
         <ListItemText primary="Modelos" />
       </ListItem>
@@ -59,7 +62,23 @@ export const mainListItems = (
         <ListItemIcon>
           <Description />
         </ListItemIcon>
-        <ListItemText primary="Proposta" />
+        <ListItemText primary="Propostas" />
+      </ListItem>
+    </Link>
+    <Link to='/proposal/create' className='link'>
+      <ListItem button>
+        <ListItemIcon>
+          <LaunchIcon />
+        </ListItemIcon>
+        <ListItemText primary="Emitir Proposta" />
+      </ListItem>
+    </Link>
+    <Link to='/dashboard' className='link'>
+      <ListItem button>
+        <ListItemIcon>
+          <PieChartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
       </ListItem>
     </Link>
   </div>

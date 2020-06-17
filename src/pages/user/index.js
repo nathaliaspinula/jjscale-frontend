@@ -74,17 +74,17 @@ export default class Users extends Component {
           })
           .then((willDelete) => {
             if (willDelete) {
-                const { id } = JSON.parse(localStorage.getItem('user'));
+                const user = JSON.parse(localStorage.getItem('user'));
                 api.delete('/user', {
                     data: {
                         id,
-                        idusuario: id
+                        idusuario: user.id
                     }
                 }).then(response => {
                     swal("Usuário excluído com sucesso.", {
                         icon: "success",
                     });
-                    this.loadProducts()
+                    this.loadUsers()
                 }).catch(error => {
                     swal("Ocorreu um erro!", "Tente novamente.", "error").then(
                         this.setState({ isLoading: false })

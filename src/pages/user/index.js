@@ -34,10 +34,13 @@ export default class Users extends Component {
         isLoading: true,
         id: '',
         open: false,
+        idUsuarioLogado: ''
     }
     
     componentDidMount() {
         this.loadUsers();
+        const { id } = JSON.parse(localStorage.getItem('user'));
+        this.setState({ idUsuarioLogado: id});
     }
     
     loadUsers = async () =>
@@ -74,11 +77,10 @@ export default class Users extends Component {
           })
           .then((willDelete) => {
             if (willDelete) {
-                const user = JSON.parse(localStorage.getItem('user'));
                 api.delete('/user', {
                     data: {
                         id,
-                        idusuario: user.id
+                        idusuario: this.state.idUsuarioLogado
                     }
                 }).then(response => {
                     swal("Usuário excluído com sucesso.", {
@@ -140,7 +142,11 @@ export default class Users extends Component {
                                     <Link to={`/user/${rowData.id}`}>
                                         <EditIcon color="action" fontSize="small"/>
                                     </Link>
-                                    <DeleteIcon color="action" fontSize="small" onClick={() => this.deleteUser(rowData.id)}/>
+                                    {
+                                        this.state.idUsuarioLogado !== rowData.id ? 
+                                        <DeleteIcon color="action" fontSize="small" onClick={() => this.deleteUser(rowData.id)}/> : null
+                                    }
+                                    
                                 </React.Fragment>
                             }
                         ]}
